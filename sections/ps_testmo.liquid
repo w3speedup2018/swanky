@@ -1,8 +1,10 @@
 
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.shopify.com/s/files/1/1283/2241/files/slick.css?1695">
 <link rel="stylesheet" type="text/css" href="https://cdn.shopify.com/s/files/1/1283/2241/files/slick-theme.css?1695"> -->
-{{ 'slick.css' | asset_url | stylesheet_tag }}
-{{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" data-href="{{ 'slick.css' | asset_url }}">
+<link rel="stylesheet" data-href="{{ 'slick-theme.css' | asset_url }}">
+
 <!--[made by rivi ps_testmo]-->
 <div {% if section.settings.darken == true %}style="background-color:{{ section.settings.c1}};"{% endif %} class="ps_tets">
 <div class="container">

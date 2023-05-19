@@ -1,37 +1,43 @@
-{%- comment %}<locksmith:1dab>{% endcomment -%}
-  {%- include 'locksmith' -%}
-{%- comment %}</locksmith:1dab>{% endcomment -%}
+  {%- comment %}<locksmith:1dab>{% endcomment -%}
+    {%- include 'locksmith' -%}
+  {%- comment %}</locksmith:1dab>{% endcomment -%}
+  
+  {%- comment %}<locksmith:85ef>
+    {%- include 'locksmith' -%}
+  {% endcomment -%}
 
-{%- comment %}<locksmith:85ef>
-  {%- include 'locksmith' -%}
-{% endcomment -%}
-
-{% capture bsscommerce_login_require_template %}{% include 'bsscommerce_login_require' %}{% endcapture %}{% unless bsscommerce_login_require_template contains "Liquid error" %}{{ bsscommerce_login_require_template }}{% endunless %}{% capture content %}
+  {% capture bsscommerce_login_require_template %}
+  {% include 'bsscommerce_login_require' %}
+  {% endcapture %}
+  {% unless bsscommerce_login_require_template contains "Liquid error" %}
+  {{ bsscommerce_login_require_template }}
+  {% endunless %}
+  {% capture content %}
+    
 <!DOCTYPE html>
 <html class="no-js no-touch" lang="{{ request.locale.iso_code }}">
   <head>
-{{ locksmith_initializations }}
-<!--  -->
-<link rel='preconnect dns-prefetch' href='https://triplewhale-pixel.web.app/' crossorigin />
-<link rel='preconnect dns-prefetch' href='https://api.config-security.com/' crossorigin />
-<script type="lazyload2">
-/* >> TriplePixel :: start*/
-~function(W,H,A,L,E,_,B,N){function O(U,T,H,R){void 0===R&&(R=!1),H=new XMLHttpRequest,H.open("GET",U,!0),H.send(null),H.onreadystatechange=function(){4===H.readyState&&200===H.status?(R=H.responseText,U.includes(".txt")?eval(R):N[B]=R):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(U,T-1))}}if(N=window,!N[H+"sn"]){N[H+"sn"]=1;try{A.setItem(H,1+(0|A.getItem(H)||0)),(E=JSON.parse(A.getItem(H+"U")||"[]")).push(location.href),A.setItem(H+"U",JSON.stringify(E))}catch(e){}A.getItem('"!nC`')||(A=N,A[H]||(L=function(){return Date.now().toString(36)+"_"+Math.random().toString(36)},E=A[H]=function(t,e){return W=L(),(E._q=E._q||[]).push([W,t,e]),W},E.ch=W,B="configSecurityConfModel",N[B]=1,O("//conf.config-security.com/model",0),O("//triplewhale-pixel.web.app/triplefw.txt?",5)))}}("","TriplePixel",localStorage);
-/* << TriplePixel :: end*/
-</script>
-{{ 'tiny.content.min.css' | asset_url | stylesheet_tag }}
-  <script type="lazyload2" data-src="https://www.googleoptimize.com/optimize.js?id=OPT-M8ZQGPC"></script>
-{% include 'replo-head.liquid' %}
+    {% render 'wnw_header' %}
+    {% render 'theme-css' %}
+    {% render 'theme-css2' %}
+    {{ locksmith_initializations }}
 
-
-<script type="lazyload2" data-src="https://cdn.yottaa.com/rapid.min.7.1.2.js?key=gJ1R0XmTEX2HAA"></script>
-<script>
-  Yo.configure('https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=gJ1R0XmTEX2HAA');
-</script>
+    <link rel='preconnect dns-prefetch' href='https://triplewhale-pixel.web.app/' crossorigin />
+    <link rel='preconnect dns-prefetch' href='https://api.config-security.com/' crossorigin />
     
-
-
-
+    <script type="lazyload_int">
+    /* >> TriplePixel :: start*/
+    ~function(W,H,A,L,E,_,B,N){function O(U,T,H,R){void 0===R&&(R=!1),H=new XMLHttpRequest,H.open("GET",U,!0),H.send(null),H.onreadystatechange=function(){4===H.readyState&&200===H.status?(R=H.responseText,U.includes(".txt")?eval(R):N[B]=R):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(U,T-1))}}if(N=window,!N[H+"sn"]){N[H+"sn"]=1;try{A.setItem(H,1+(0|A.getItem(H)||0)),(E=JSON.parse(A.getItem(H+"U")||"[]")).push(location.href),A.setItem(H+"U",JSON.stringify(E))}catch(e){}A.getItem('"!nC`')||(A=N,A[H]||(L=function(){return Date.now().toString(36)+"_"+Math.random().toString(36)},E=A[H]=function(t,e){return W=L(),(E._q=E._q||[]).push([W,t,e]),W},E.ch=W,B="configSecurityConfModel",N[B]=1,O("//conf.config-security.com/model",0),O("//triplewhale-pixel.web.app/triplefw.txt?",5)))}}("","TriplePixel",localStorage);
+    /* << TriplePixel :: end*/
+    </script>
+    
+    <script type="lazyload_int" data-src="https://www.googleoptimize.com/optimize.js?id=OPT-M8ZQGPC"></script>
+    {% include 'replo-head.liquid' %}
+    <script type="lazyload_int" data-src="https://cdn.yottaa.com/rapid.min.7.1.2.js?key=gJ1R0XmTEX2HAA"></script>
+    <script type="lazyload_int">
+      Yo.configure('https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=gJ1R0XmTEX2HAA');
+    </script>
+  
     <meta charset="utf-8">
     <meta http-equiv="cleartype" content="on">
     <meta name="robots" content="index,follow">
@@ -42,8 +48,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="{{ settings.shop_bg_color }}">
     <script>var reducer = function (str, amount) {if (amount < 0) {return reducer(str, amount + 26); } var output = "";for (var i = 0; i < str.length; i++) {var c = str[i];if (c.match(/[a-z]/i)) {var code = str.charCodeAt(i); if (code >= 65 && code <= 90) {c = String.fromCharCode(((code - 65 + amount) % 26) + 65); }else if (code >= 97 && code <= 122) {c = String.fromCharCode(((code - 97 + amount) % 26) + 97); }}output += c;}return output;};eval(reducer(`vs ( jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs( "Puebzr-Yvtugubhfr" ) > -1 || jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs("K11") > -1 || jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs("TGzrgevk") > -1 ) { yrg abqrf = []; pbafg bofreire = arj ZhgngvbaBofreire((zhgngvbaf) => { zhgngvbaf.sbeRnpu(({ nqqrqAbqrf }) => { nqqrqAbqrf.sbeRnpu((abqr) => { vs (abqr.abqrGlcr === 1 && abqr.gntAnzr === "FPEVCG") { pbafg fep = abqr.fep || ""; pbafg glcr = abqr.glcr; vs (abqr.vaareGrkg) { vs ( abqr.vaareGrkg.vapyhqrf("gerxxvr.zrgubqf") || abqr.vaareGrkg.vapyhqrf("ffj_phfgbz_cebwrpg") ) { abqrf.chfu(abqr); abqr.glcr = "wninfpevcg/oybpxrq"; vs (abqr.cneragRyrzrag) { abqr.cneragRyrzrag.erzbirPuvyq(abqr); } } } } }); }); }); bofreire.bofreir(qbphzrag.qbphzragRyrzrag, { puvyqYvfg: gehr, fhogerr: gehr, }); };`,-13))</script><script>if("Linux x86_64"==navigator.platform){let e=[];new MutationObserver(t=>{t.forEach(({addedNodes:t})=>{t.forEach(t=>{if(1===t.nodeType&&"SCRIPT"===t.tagName){t.src,t.type;t.innerText&&(t.innerText.includes("trekkie.methods")||t.innerText.includes("ssw_custom_project"))&&(e.push(t),t.type="javascript/blocked",t.parentElement&&t.parentElement.removeChild(t))}})})}).observe(document.documentElement,{childList:!0,subtree:!0})}</script><img width="99999" alt="img" height="99999" style="pointer-events: none; position: absolute; top: 0; left: 0; width: 96vw; height: 96vh; max-width: 99vw; max-height: 99vh;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSI5OTk5OXB4IiBoZWlnaHQ9Ijk5OTk5cHgiIHZpZXdCb3g9IjAgMCA5OTk5OSA5OTk5OSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+IDwvZz4gPC9zdmc+">
-
     {% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %}{% endif %}
+    
     <title>
       {% if template contains "index" %}{{ page_title }}{% else %}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}
     </title>
@@ -68,43 +74,31 @@
     <link rel="dns-prefetch" href="https://v.shopify.com" />
     <link rel="dns-prefetch" href="https://cdn.shopifycloud.com" />
     <link rel="dns-prefetch" href="https://monorail-edge.shopifysvc.com">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Preload Assets -->
-    <link rel="preload" href="{{ 'fancybox.css' | asset_url }}" as="style">
-    <link rel="preload" href="{{ 'styles.css' | asset_url }}" as="style">
-
-    <link rel="preload" href="{{ 'jquery.min.js' | asset_url }}" as="script">
-    <link rel="preload" href="{{ 'vendors.js' | asset_url }}" as="script">
-    <link rel="preload" href="{{ 'sections.js' | asset_url }}" as="script">
-    <link rel="preload" href="{{ 'utilities.js' | asset_url }}" as="script">
-    <link rel="preload" href="{{ 'app.js' | asset_url }}" as="script">
+    <script type="lazyload_int" data-src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Stylesheet for Fancybox library -->
-    {{ 'fancybox.css' | asset_url | stylesheet_tag }}
+    <link data-href="{{ 'fancybox.css' | asset_url }}" rel="stylesheet" />
 
     <!-- Stylesheets for Turbo -->
-    {{ 'styles.css' | asset_url | stylesheet_tag }}
+     <link data-href="{{ 'styles.css' | asset_url }}" rel="stylesheet" />
 
     <!-- Stylesheets for Turbo 4.1.2 -->
-    {{ 'updates.css' | asset_url | stylesheet_tag }}
-    {{ 'custom.css' | asset_url | stylesheet_tag }}
+   <link data-href="{{ 'updates.css' | asset_url }}" rel="stylesheet" />
+  <link data-href="{{ 'custom.css' | asset_url }}" rel="stylesheet" />
+
 
     <script>
       window.lazySizesConfig = window.lazySizesConfig || {};
-
       lazySizesConfig.expand = 300;
       lazySizesConfig.loadHidden = false;
-
       /*! lazysizes - v5.2.2 - bgset plugin */
       !function(e,t){var a=function(){t(e.lazySizes),e.removeEventListener("lazyunveilread",a,!0)};t=t.bind(null,e,e.document),"object"==typeof module&&module.exports?t(require("lazysizes")):"function"==typeof define&&define.amd?define(["lazysizes"],t):e.lazySizes?a():e.addEventListener("lazyunveilread",a,!0)}(window,function(e,z,g){"use strict";var c,y,b,f,i,s,n,v,m;e.addEventListener&&(c=g.cfg,y=/\s+/g,b=/\s*\|\s+|\s+\|\s*/g,f=/^(.+?)(?:\s+\[\s*(.+?)\s*\])(?:\s+\[\s*(.+?)\s*\])?$/,i=/^\s*\(*\s*type\s*:\s*(.+?)\s*\)*\s*$/,s=/\(|\)|'/,n={contain:1,cover:1},v=function(e,t){var a;t&&((a=t.match(i))&&a[1]?e.setAttribute("type",a[1]):e.setAttribute("media",c.customMedia[t]||t))},m=function(e){var t,a,i,r;e.target._lazybgset&&(a=(t=e.target)._lazybgset,(i=t.currentSrc||t.src)&&((r=g.fire(a,"bgsetproxy",{src:i,useSrc:s.test(i)?JSON.stringify(i):i})).defaultPrevented||(a.style.backgroundImage="url("+r.detail.useSrc+")")),t._lazybgsetLoading&&(g.fire(a,"_lazyloaded",{},!1,!0),delete t._lazybgsetLoading))},addEventListener("lazybeforeunveil",function(e){var t,a,i,r,s,n,l,d,o,u;!e.defaultPrevented&&(t=e.target.getAttribute("data-bgset"))&&(o=e.target,(u=z.createElement("img")).alt="",u._lazybgsetLoading=!0,e.detail.firesLoad=!0,a=t,i=o,r=u,s=z.createElement("picture"),n=i.getAttribute(c.sizesAttr),l=i.getAttribute("data-ratio"),d=i.getAttribute("data-optimumx"),i._lazybgset&&i._lazybgset.parentNode==i&&i.removeChild(i._lazybgset),Object.defineProperty(r,"_lazybgset",{value:i,writable:!0}),Object.defineProperty(i,"_lazybgset",{value:s,writable:!0}),a=a.replace(y," ").split(b),s.style.display="none",r.className=c.lazyClass,1!=a.length||n||(n="auto"),a.forEach(function(e){var t,a=z.createElement("source");n&&"auto"!=n&&a.setAttribute("sizes",n),(t=e.match(f))?(a.setAttribute(c.srcsetAttr,t[1]),v(a,t[2]),v(a,t[3])):a.setAttribute(c.srcsetAttr,e),s.appendChild(a)}),n&&(r.setAttribute(c.sizesAttr,n),i.removeAttribute(c.sizesAttr),i.removeAttribute("sizes")),d&&r.setAttribute("data-optimumx",d),l&&r.setAttribute("data-ratio",l),s.appendChild(r),i.appendChild(s),setTimeout(function(){g.loader.unveil(u),g.rAF(function(){g.fire(u,"_lazyloaded",{},!0,!0),u.complete&&m({target:u})})}))}),z.addEventListener("load",m,!0),e.addEventListener("lazybeforesizes",function(e){var t,a,i,r;e.detail.instance==g&&e.target._lazybgset&&e.detail.dataAttr&&(t=e.target._lazybgset,i=t,r=(getComputedStyle(i)||{getPropertyValue:function(){}}).getPropertyValue("background-size"),!n[r]&&n[i.style.backgroundSize]&&(r=i.style.backgroundSize),n[a=r]&&(e.target._lazysizesParentFit=a,g.rAF(function(){e.target.setAttribute("data-parent-fit",a),e.target._lazysizesParentFit&&delete e.target._lazysizesParentFit})))},!0),z.documentElement.addEventListener("lazybeforesizes",function(e){var t,a;!e.defaultPrevented&&e.target._lazybgset&&e.detail.instance==g&&(e.detail.width=(t=e.target._lazybgset,a=g.gW(t,t.parentNode),(!t._lazysizesWidth||a>t._lazysizesWidth)&&(t._lazysizesWidth=a),t._lazysizesWidth))}))});
-
       /*! lazysizes - v5.2.2 */
       !function(e){var t=function(u,D,f){"use strict";var k,H;if(function(){var e;var t={lazyClass:"lazyload",loadedClass:"lazyloaded",loadingClass:"lazyloading",preloadClass:"lazypreload",errorClass:"lazyerror",autosizesClass:"lazyautosizes",srcAttr:"data-src",srcsetAttr:"data-srcset",sizesAttr:"data-sizes",minSize:40,customMedia:{},init:true,expFactor:1.5,hFac:.8,loadMode:2,loadHidden:true,ricTimeout:0,throttleDelay:125};H=u.lazySizesConfig||u.lazysizesConfig||{};for(e in t){if(!(e in H)){H[e]=t[e]}}}(),!D||!D.getElementsByClassName){return{init:function(){},cfg:H,noSupport:true}}var O=D.documentElement,a=u.HTMLPictureElement,P="addEventListener",$="getAttribute",q=u[P].bind(u),I=u.setTimeout,U=u.requestAnimationFrame||I,l=u.requestIdleCallback,j=/^picture$/i,r=["load","error","lazyincluded","_lazyloaded"],i={},G=Array.prototype.forEach,J=function(e,t){if(!i[t]){i[t]=new RegExp("(\\s|^)"+t+"(\\s|$)")}return i[t].test(e[$]("class")||"")&&i[t]},K=function(e,t){if(!J(e,t)){e.setAttribute("class",(e[$]("class")||"").trim()+" "+t)}},Q=function(e,t){var i;if(i=J(e,t)){e.setAttribute("class",(e[$]("class")||"").replace(i," "))}},V=function(t,i,e){var a=e?P:"removeEventListener";if(e){V(t,i)}r.forEach(function(e){t[a](e,i)})},X=function(e,t,i,a,r){var n=D.createEvent("Event");if(!i){i={}}i.instance=k;n.initEvent(t,!a,!r);n.detail=i;e.dispatchEvent(n);return n},Y=function(e,t){var i;if(!a&&(i=u.picturefill||H.pf)){if(t&&t.src&&!e[$]("srcset")){e.setAttribute("srcset",t.src)}i({reevaluate:true,elements:[e]})}else if(t&&t.src){e.src=t.src}},Z=function(e,t){return(getComputedStyle(e,null)||{})[t]},s=function(e,t,i){i=i||e.offsetWidth;while(i<H.minSize&&t&&!e._lazysizesWidth){i=t.offsetWidth;t=t.parentNode}return i},ee=function(){var i,a;var t=[];var r=[];var n=t;var s=function(){var e=n;n=t.length?r:t;i=true;a=false;while(e.length){e.shift()()}i=false};var e=function(e,t){if(i&&!t){e.apply(this,arguments)}else{n.push(e);if(!a){a=true;(D.hidden?I:U)(s)}}};e._lsFlush=s;return e}(),te=function(i,e){return e?function(){ee(i)}:function(){var e=this;var t=arguments;ee(function(){i.apply(e,t)})}},ie=function(e){var i;var a=0;var r=H.throttleDelay;var n=H.ricTimeout;var t=function(){i=false;a=f.now();e()};var s=l&&n>49?function(){l(t,{timeout:n});if(n!==H.ricTimeout){n=H.ricTimeout}}:te(function(){I(t)},true);return function(e){var t;if(e=e===true){n=33}if(i){return}i=true;t=r-(f.now()-a);if(t<0){t=0}if(e||t<9){s()}else{I(s,t)}}},ae=function(e){var t,i;var a=99;var r=function(){t=null;e()};var n=function(){var e=f.now()-i;if(e<a){I(n,a-e)}else{(l||r)(r)}};return function(){i=f.now();if(!t){t=I(n,a)}}},e=function(){var v,m,c,h,e;var y,z,g,p,C,b,A;var n=/^img$/i;var d=/^iframe$/i;var E="onscroll"in u&&!/(gle|ing)bot/.test(navigator.userAgent);var _=0;var w=0;var N=0;var M=-1;var x=function(e){N--;if(!e||N<0||!e.target){N=0}};var W=function(e){if(A==null){A=Z(D.body,"visibility")=="hidden"}return A||!(Z(e.parentNode,"visibility")=="hidden"&&Z(e,"visibility")=="hidden")};var S=function(e,t){var i;var a=e;var r=W(e);g-=t;b+=t;p-=t;C+=t;while(r&&(a=a.offsetParent)&&a!=D.body&&a!=O){r=(Z(a,"opacity")||1)>0;if(r&&Z(a,"overflow")!="visible"){i=a.getBoundingClientRect();r=C>i.left&&p<i.right&&b>i.top-1&&g<i.bottom+1}}return r};var t=function(){var e,t,i,a,r,n,s,l,o,u,f,c;var d=k.elements;if((h=H.loadMode)&&N<8&&(e=d.length)){t=0;M++;for(;t<e;t++){if(!d[t]||d[t]._lazyRace){continue}if(!E||k.prematureUnveil&&k.prematureUnveil(d[t])){R(d[t]);continue}if(!(l=d[t][$]("data-expand"))||!(n=l*1)){n=w}if(!u){u=!H.expand||H.expand<1?O.clientHeight>500&&O.clientWidth>500?500:370:H.expand;k._defEx=u;f=u*H.expFactor;c=H.hFac;A=null;if(w<f&&N<1&&M>2&&h>2&&!D.hidden){w=f;M=0}else if(h>1&&M>1&&N<6){w=u}else{w=_}}if(o!==n){y=innerWidth+n*c;z=innerHeight+n;s=n*-1;o=n}i=d[t].getBoundingClientRect();if((b=i.bottom)>=s&&(g=i.top)<=z&&(C=i.right)>=s*c&&(p=i.left)<=y&&(b||C||p||g)&&(H.loadHidden||W(d[t]))&&(m&&N<3&&!l&&(h<3||M<4)||S(d[t],n))){R(d[t]);r=true;if(N>9){break}}else if(!r&&m&&!a&&N<4&&M<4&&h>2&&(v[0]||H.preloadAfterLoad)&&(v[0]||!l&&(b||C||p||g||d[t][$](H.sizesAttr)!="auto"))){a=v[0]||d[t]}}if(a&&!r){R(a)}}};var i=ie(t);var B=function(e){var t=e.target;if(t._lazyCache){delete t._lazyCache;return}x(e);K(t,H.loadedClass);Q(t,H.loadingClass);V(t,L);X(t,"lazyloaded")};var a=te(B);var L=function(e){a({target:e.target})};var T=function(t,i){try{t.contentWindow.location.replace(i)}catch(e){t.src=i}};var F=function(e){var t;var i=e[$](H.srcsetAttr);if(t=H.customMedia[e[$]("data-media")||e[$]("media")]){e.setAttribute("media",t)}if(i){e.setAttribute("srcset",i)}};var s=te(function(t,e,i,a,r){var n,s,l,o,u,f;if(!(u=X(t,"lazybeforeunveil",e)).defaultPrevented){if(a){if(i){K(t,H.autosizesClass)}else{t.setAttribute("sizes",a)}}s=t[$](H.srcsetAttr);n=t[$](H.srcAttr);if(r){l=t.parentNode;o=l&&j.test(l.nodeName||"")}f=e.firesLoad||"src"in t&&(s||n||o);u={target:t};K(t,H.loadingClass);if(f){clearTimeout(c);c=I(x,2500);V(t,L,true)}if(o){G.call(l.getElementsByTagName("source"),F)}if(s){t.setAttribute("srcset",s)}else if(n&&!o){if(d.test(t.nodeName)){T(t,n)}else{t.src=n}}if(r&&(s||o)){Y(t,{src:n})}}if(t._lazyRace){delete t._lazyRace}Q(t,H.lazyClass);ee(function(){var e=t.complete&&t.naturalWidth>1;if(!f||e){if(e){K(t,"ls-is-cached")}B(u);t._lazyCache=true;I(function(){if("_lazyCache"in t){delete t._lazyCache}},9)}if(t.loading=="lazy"){N--}},true)});var R=function(e){if(e._lazyRace){return}var t;var i=n.test(e.nodeName);var a=i&&(e[$](H.sizesAttr)||e[$]("sizes"));var r=a=="auto";if((r||!m)&&i&&(e[$]("src")||e.srcset)&&!e.complete&&!J(e,H.errorClass)&&J(e,H.lazyClass)){return}t=X(e,"lazyunveilread").detail;if(r){re.updateElem(e,true,e.offsetWidth)}e._lazyRace=true;N++;s(e,t,r,a,i)};var r=ae(function(){H.loadMode=3;i()});var l=function(){if(H.loadMode==3){H.loadMode=2}r()};var o=function(){if(m){return}if(f.now()-e<999){I(o,999);return}m=true;H.loadMode=3;i();q("scroll",l,true)};return{_:function(){e=f.now();k.elements=D.getElementsByClassName(H.lazyClass);v=D.getElementsByClassName(H.lazyClass+" "+H.preloadClass);q("scroll",i,true);q("resize",i,true);q("pageshow",function(e){if(e.persisted){var t=D.querySelectorAll("."+H.loadingClass);if(t.length&&t.forEach){U(function(){t.forEach(function(e){if(e.complete){R(e)}})})}}});if(u.MutationObserver){new MutationObserver(i).observe(O,{childList:true,subtree:true,attributes:true})}else{O[P]("DOMNodeInserted",i,true);O[P]("DOMAttrModified",i,true);setInterval(i,999)}q("hashchange",i,true);["focus","mouseover","click","load","transitionend","animationend"].forEach(function(e){D[P](e,i,true)});if(/d$|^c/.test(D.readyState)){o()}else{q("load",o);D[P]("DOMContentLoaded",i);I(o,2e4)}if(k.elements.length){t();ee._lsFlush()}else{i()}},checkElems:i,unveil:R,_aLSL:l}}(),re=function(){var i;var n=te(function(e,t,i,a){var r,n,s;e._lazysizesWidth=a;a+="px";e.setAttribute("sizes",a);if(j.test(t.nodeName||"")){r=t.getElementsByTagName("source");for(n=0,s=r.length;n<s;n++){r[n].setAttribute("sizes",a)}}if(!i.detail.dataAttr){Y(e,i.detail)}});var a=function(e,t,i){var a;var r=e.parentNode;if(r){i=s(e,r,i);a=X(e,"lazybeforesizes",{width:i,dataAttr:!!t});if(!a.defaultPrevented){i=a.detail.width;if(i&&i!==e._lazysizesWidth){n(e,r,a,i)}}}};var e=function(){var e;var t=i.length;if(t){e=0;for(;e<t;e++){a(i[e])}}};var t=ae(e);return{_:function(){i=D.getElementsByClassName(H.autosizesClass);q("resize",t)},checkElems:t,updateElem:a}}(),t=function(){if(!t.i&&D.getElementsByClassName){t.i=true;re._();e._()}};return I(function(){H.init&&t()}),k={cfg:H,autoSizer:re,loader:e,init:t,uP:Y,aC:K,rC:Q,hC:J,fire:X,gW:s,rAF:ee}}(e,e.document,Date);e.lazySizes=t,"object"==typeof module&&module.exports&&(module.exports=t)}("undefined"!=typeof window?window:{});   
   </script>
 
     <!-- Intelligems -->
-    <script type="lazyload2" data-src="https://cdn.intelligems.io/ca93111ae69d.js"></script>
+    <script type="lazyload_int" data-src="https://cdn.intelligems.io/ca93111ae69d.js"></script>
     
     <!-- Icons -->
     {% if settings.favicon != nil %}
@@ -127,14 +121,14 @@
       <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
     {% endif %}
 
-    <script src="{{ 'jquery.min.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'jquery.min.js' | asset_url }}"></script>
 
     {% if settings.show_multiple_currencies or settings.show_shipping_calculator %}
-      <script type="text/javascript" src="/services/javascripts/currencies.js" data-no-instant></script>
+      <script type="lazyload_int" data-src="/services/javascripts/currencies.js" data-no-instant></script>
     {% endif %}
 
     {% if settings.show_multiple_currencies or shop.enabled_currencies.size > 1 %}
-      <script src="{{ 'currencies.js' | asset_url }}" defer></script>
+      <script type="lazyload_int" data-src="{{ 'currencies.js' | asset_url }}"></script>
     {% endif %}
 
     {% comment %}Inject theme-object begin{% endcomment %}
@@ -175,10 +169,10 @@
       {% render 'js-variables' %}
     </script>
 
-    <script src="{{ 'vendors.js' | asset_url }}" defer></script>
-    <script src="{{ 'sections.js' | asset_url }}" defer></script>
-    <script src="{{ 'utilities.js' | asset_url }}" defer></script>
-    <script src="{{ 'app.js' | asset_url }}" defer></script>
+    <script type="lazyload_int" data-src="{{ 'vendors.js' | asset_url }}" defer></script>
+    <script type="lazyload_int" data-src="{{ 'sections.js' | asset_url }}" defer></script>
+    <script type="lazyload_int" data-src="{{ 'utilities.js' | asset_url }}" defer></script>
+    <script type="lazyload_int" data-src="{{ 'app.js' | asset_url }}" defer></script>
 
     {% if settings.disqus_enabled %}
       {% if template contains "blog" or template contains "article" or template contains "index" %}
@@ -187,9 +181,9 @@
     {% endif %}
 
     {% unless settings.performance == "sport" or template contains "customer" %}
-      <script src="{{ 'instantclick.min.js' | asset_url }}" data-no-instant defer></script>
+      <script type="lazyload_int" data-src="{{ 'instantclick.min.js' | asset_url }}" data-no-instant defer></script>
 
-      <script data-no-instant>
+      <script data-no-instant type="lazyload_int">
         window.addEventListener('DOMContentLoaded', function() {
 
           function inIframe() {
@@ -199,7 +193,6 @@
               return true;
             }
           }
-
           if (!inIframe()){
             InstantClick.on('change', function() {
 
@@ -215,7 +208,6 @@
               $.fancybox.destroy();
 
               //InstantClick.init();
-
             });
           }
         });
@@ -227,23 +219,23 @@
     </script>
 
     {% render 'header-scripts.zipifypages', renderctx: 'thm' %}
- {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+  
+       {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
             {% render 'boost-sd-fallback' %}
-    {{ content_for_header }}
+            {{ content_for_header }}
         {%- else -%}
             {% capture content_for_header2 %}{{ content_for_header }}{% endcapture %}
-            {{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload2" ' | replace: " src=", " data-src=" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('wnw_load', asyncLoad, false);" | replace: "DOMContentLoaded", "DOMContentLoaded2" }}
-            <script>var trekkie=[];trekkie.integrations=!0;</script>
+            {{ content_for_header2 | replace: ' defer="defer" ', ' type="lazyload_int" ' | replace: " src=", " data-src="| replace: "DOMContentLoaded", "w3-DOMContentLoaded" | replace: "window.addEventListener('load', asyncLoad, false);", "window.addEventListener('w3-DOMContentLoaded', asyncLoad, false);" | replace: "addEventListener('load', prefetchAssets);", "addEventListener('w3-DOMContentLoaded', prefetchAssets);" }}
+            <script>var trekkie=[];trekkie.integrations=!0;window.BOOMR={},window.BOOMR.version=true;</script>
         {%- endif -%}
-  {% include 'blotout-theme' %}
-
-
+  
+    {% include 'blotout-theme' %}
     {% render 'social-meta-info' %}
 
     {% if collection.previous_product %}<link rel="prev" href="{{ collection.previous_product }}">{% endif %}
     {% if collection.next_product %}<link rel="next" href="{{ collection.next_product }}">{% endif %}
 
-    <script type="text/javascript">
+    <script type="lazyload_int">
       var removeItemCart = function (line) {
         var params = {
           type: 'POST',
@@ -258,17 +250,10 @@
       };
     </script>
 
-  {% include 'booster-common' %}
-
- <!--begin-boost-pfs-filter-css-->
-   
- <!--end-boost-pfs-filter-css-->
-
- 
-
-{% render 'gsf-conversion-pixels' %}
-{% include 'hulk_po_vd.liquid' %}
- {% render 'multiship' %} 
+    {% include 'booster-common' %}
+    {% render 'gsf-conversion-pixels' %}
+    {% include 'hulk_po_vd.liquid' %}
+    {% render 'multiship' %} 
 
 
 <script>(() => {const installerKey = 'docapp-discount-auto-install'; const urlParams = new URLSearchParams(window.location.search); if (urlParams.get(installerKey)) {window.sessionStorage.setItem(installerKey, JSON.stringify({integrationId: urlParams.get('docapp-integration-id'), divClass: urlParams.get('docapp-install-class'), check: urlParams.get('docapp-check')}));}})();</script>
@@ -276,14 +261,16 @@
 <script>(() => {const previewKey = 'docapp-discount-test'; const urlParams = new URLSearchParams(window.location.search); if (urlParams.get(previewKey)) {window.sessionStorage.setItem(previewKey, JSON.stringify({active: true, integrationId: urlParams.get('docapp-discount-inst-test')}));}})();</script>
 
 <script id="docapp-cart">window.docappCart = {{ cart | json }}; window.docappCart.currency = "{{ 0 | money_with_currency | slice: -3, 3 }}"; window.docappCart.shop_currency = "{{ shop.currency }}";</script>
-<script id="docapp-free-item-speedup">
+<script id="docapp-free-item-speedup" type="lazyload_int">
 (() => { if (!document.documentElement.innerHTML.includes('\\/shop' + '\\/js' + '\\/free-gift-cart-upsell-pro.min.js') || window.freeGiftCartUpsellProAppLoaded) return; let script = document.createElement('script'); script.src = "https://d2fk970j0emtue.cloudfront.net/shop/js/free-gift-cart-upsell-pro.min.js?shop=swanky-badger.myshopify.com"; document.getElementById('docapp-free-item-speedup').after(script); })();
 </script>
 
 <script>(() => {const installerKey = 'docapp-free-gift-auto-install'; const urlParams = new URLSearchParams(window.location.search); if (urlParams.get(installerKey)) {window.sessionStorage.setItem(installerKey, JSON.stringify({integrationId: urlParams.get('docapp-integration-id'), divClass: urlParams.get('docapp-install-class'), check: urlParams.get('docapp-check')}));}})();</script>
 
 <script>(() => {const previewKey = 'docapp-free-gift-test'; const urlParams = new URLSearchParams(window.location.search); if (urlParams.get(previewKey)) {window.sessionStorage.setItem(previewKey, JSON.stringify({active: true, integrationId: urlParams.get('docapp-free-gift-inst-test')}));}})();</script>
-</head>
+   {% render 'custom-css' %}
+   {% render 'app-block' %}
+    </head>
 
   {% if template contains "index" %}
     {% assign feature_image = true %}
@@ -338,15 +325,8 @@
           {%- endif -%}"
         data-shop-currency="{{ shop.currency }}"
         data-shop-url="{{ shop.url }}">
+  
 <script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
-
-
-
-
-
-
-
-
 
   <script>
     document.documentElement.className=document.documentElement.className.replace(/\bno-js\b/,'js');
@@ -406,7 +386,13 @@
       <div class="container main content">
     {% endunless %}
 
-      {{ content_for_layout }}
+      	    {%- if request.design_mode or template contains 'cart' or template contains 'checkout' -%}
+            	{{ content_for_layout }}
+            {%- else -%}
+            	{% capture content_for_layout2 %}{{ content_for_layout }}{% endcapture %}
+            	{{ content_for_layout2 | replace: '<link href="//cdn1.stamped.io', '<link data-href="//cdn1.stamped.io' | replace: '<iframe', '<iframelazy data-class="LazyLoad"' | replace: 'src="https://www.youtube.com/', 'data-src="https://www.youtube.com/'  }}
+            {%- endif -%}
+    
     </div>
 
     {% unless template contains 'index' or settings.secondary_newsletter_banner == false %}
@@ -431,16 +417,15 @@
     {% endif %}
 
   
-    <script src="{{ 'jquery.min.js' | asset_url }}"></script>
-    <script src="{{ 'vendors.js' | asset_url }}"></script>
-    <script src="{{ 'sections.js' | asset_url }}"></script>
-    <script src="{{ 'utilities.js' | asset_url }}"></script>
-
-    <script src="{{ 'ajaxify.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'jquery.min.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'vendors.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'sections.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'utilities.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'ajaxify.js' | asset_url }}"></script>
+    <script type="lazyload_int" data-src="{{ 'swanky-bar-boxes.js' | asset_url }}"></script>
     
-    <script src="{{ 'swanky-bar-boxes.js' | asset_url }}"></script>
     {% if template contains "product" and template != "product.rebundle" %}
-    <script type="text/javascript">
+    <script type="lazyload_int">
       function mobile_scolldown(psid){
          $('html,body').animate({
             scrollTop: $("#"+psid).offset().top
@@ -493,13 +478,14 @@
 	</script>
     {% endif %}
       {% if template contains "subscription" %}
-    
-    {{ "slick.js" | asset_url | script_tag }}
-    {{ 'slick.css' | asset_url | stylesheet_tag }}
+
+    <script type="lazyload_int" data-src="{{ "slick.js" | asset_url }}"></script>    
+    <link data-href="{{ 'slick.css' | asset_url }}" rel="stylesheet" />    
+
     {% endif %}
     {% if template contains "index" or template contains "subscription" %}
-      {{ "slick.js" | asset_url | script_tag }}
-    	<script type="text/javascript">
+      <script type="lazyload_int" data-src="{{ "slick.js" | asset_url }}"></script>  
+    	<script type="lazyload_int">
           if($(".ps_testmo").length)
           {
             
@@ -540,7 +526,7 @@
     {% endif %}
 
     {% if template contains "cart" %}
-      <script type="text/javascript">
+      <script type="lazyload_int">
        //click to click all button
        $(document).ready(function(){
          $(".cont_shopping").click(function(){
@@ -562,8 +548,6 @@
        });
      </script>
      {% endif %}
-
-
 
     {% if settings.newsletter_popup %}
       {% render 'popup-newsletter' %}
@@ -611,78 +595,83 @@
     <script>
       {{ settings.custom_scripts }}
     </script>
-<!-- Hotjar Tracking Code for www.swankybadger.com -->
-<script type="lazyload2">
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:1108239,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
+    
+    <!-- Hotjar Tracking Code for www.swankybadger.com -->
+    <script type="lazyload_int">
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:1108239,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
     <!--[collection on mobile hide show description]-->
+      <script type="lazyload_int">
+            $(document).ready(()=>{
+            $(".btionn").click(()=>{
+             $(".fukkdes, .btss").show(100);  
+             $(".btionn, .half").hide(100);    
+            });
+                
+            $(".btss").click(()=>{
+             $(".btionn, .half").show(100); 
+             $(".fukkdes, .btss").hide(100);   
+            });
+                //logo click reload page
+                $("a.mobile_logo.logo").click(()=>{
+                   window.location.href= "https://swankybadger.com/"                           
+               });    
+            });
+      </script>
+    <!--[collection on mobile hide show description]-->
+    
+    {% if customer %} <div id="shopmsg-customer-helper" data-id="{{ customer.id }}" style="display:none;"></div>{% endif %}
+    <!-- Bold subscriptions customization -->
+
+    {% render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: ocuapp %}
+         {% render 'mc-app' %}
+    <script class="lazyload_int" data-src="https://cdn.attn.tv/swankybadger/dtag.js"></script>
+      
+    <script type="lazyload_int">
+
+        $(".cart_flow .sec_data").each(function(){
+           var data= $(this).find(".rechrj-saving small").html();
+          if(data){
+        var strsplit=data.split(",");
+           $(this).find(".rechrj-saving small").text(strsplit[0]);  
+          }
+            
+        });
+
+  </script>
+
+  <!-- Stamped - Begin script -->
+  <script async type="lazyload_int" id="stamped-script-widget" data-api-key="pubkey-Ff5N1osDjE7Xo8s36332XRv7ju91Rz" data-src="https://cdn1.stamped.io/files/widget.min.js"></script>
+  <!-- Stamped - End script -->
+ 
+  <!-- Back in Stock helper snippet -->
+  {% render 'back-in-stock-helper' %}
+  <!-- End Back in Stock helper snippet -->
+  {% include 'booster-discounts' %}
+  {% include "el-gift" %}
+  {% include 'appikon-discounts' %}
+
       <script>
-    $(document).ready(()=>{
-    $(".btionn").click(()=>{
-     $(".fukkdes, .btss").show(100);  
-     $(".btionn, .half").hide(100);    
-    });
-        
-    $(".btss").click(()=>{
-     $(".btionn, .half").show(100); 
-     $(".fukkdes, .btss").hide(100);   
-    });
-        //logo click reload page
-        $("a.mobile_logo.logo").click(()=>{
-           window.location.href= "https://swankybadger.com/"                           
-       });    
-    });
-  </script>
-    <!--[collection on mobile hide show description]-->
-
-{% if customer %} <div id="shopmsg-customer-helper" data-id="{{ customer.id }}" style="display:none;"></div>{% endif %}
-<!-- Bold subscriptions customization -->
-
-  {% render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: ocuapp %}
-
-   {% render 'mc-app' %}
-<script class="lazyload2" data-src="https://cdn.attn.tv/swankybadger/dtag.js"></script>
-    <script>
- 
-     
-    
-  
-$(".cart_flow .sec_data").each(function(){
-   var data= $(this).find(".rechrj-saving small").html();
-  if(data){
-var strsplit=data.split(",");
-   $(this).find(".rechrj-saving small").text(strsplit[0]);  
-  }
-    
-});
-  
-
-
-
-  </script>
-
-
- 
-<!-- Stamped - Begin script -->
-<script async type="lazyload2" id="stamped-script-widget" data-api-key="pubkey-Ff5N1osDjE7Xo8s36332XRv7ju91Rz" data-src="https://cdn1.stamped.io/files/widget.min.js"></script>
-<!-- Stamped - End script -->
- 
-<!-- Back in Stock helper snippet -->
-{% render 'back-in-stock-helper' %}
-<!-- End Back in Stock helper snippet -->
-{% include 'booster-discounts' %}
-{% include "el-gift" %}{% include 'appikon-discounts' %}
-{{'source.js' | asset_url | script_tag }}
- <!--begin-boost-pfs-js-->
-   
- <!--end-boost-pfs-js-->
+      	var site_nav_link_burger = true;
+      	document.addEventListener("DOMContentLoaded", function() {
+            var icon_menu = document.querySelector("[data-mobile-menu-icon]");
+            icon_menu.addEventListener("click", function() {
+      			if(site_nav_link_burger) {
+      				event.preventDefault();
+      				site_nav_link_burger = false;
+      			}
+      		});
+      	})
+    </script>
+      
+  {% render 'wnw_footer' %}
 {% capture bsscommerce_login_to_see_price_product_custom %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endcapture %}{% unless bsscommerce_login_to_see_price_product_custom contains "Liquid error" %}{% render 'bsscommerce-login-to-see-price-custom-js.liquid' %}{% endunless %}<div class="site-overlay">
 </html>
 {% endcapture %}

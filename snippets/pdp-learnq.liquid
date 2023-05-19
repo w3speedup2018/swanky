@@ -1,0 +1,116 @@
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+
+<script type="text/javascript">
+
+window.onload = function() {
+
+  var _learnq = window._learnq || [];
+  
+  function attachCustomilyLearnQ () {
+  	const customilyAddToCartBtn = document.querySelector('#customily-cart-btn');
+    
+    if ( customilyAddToCartBtn ) {
+     console.log('we have a customily button'); 
+      window.attachedLearnQ = true
+      customilyAddToCartBtn.addEventListener('mousedown',function (){
+		console.log('customily add to cart', ' - desktop mousedown event');
+        _learnq.push(['track', 'Added to Cart', item]);
+        
+
+        console.log('customily learnq update: ', _learnq);
+   	  });
+      if ('ontouchstart' in document.documentElement === false) return;
+      customilyAddToCartBtn.addEventListener('touchstart',function (){
+		console.log('customily add to cart', '- mobile touchstart event');
+        _learnq.push(['track', 'Added to Cart', item]);
+        
+
+        console.log('customily learnq update: ', _learnq);
+   	  });
+    } else {
+     console.log('no customily button'); 
+    }
+  }
+  
+  setTimeout(function() {
+    attachCustomilyLearnQ();
+    console.log('attached 1st try');
+  }, 0);
+  
+  setTimeout(function() {
+    if (window.attachedLearnQ) return;
+    attachCustomilyLearnQ();
+    console.log('attached 2nd try');
+  }, 2500);
+  
+  setTimeout(function() {
+    if (window.attachedLearnQ) return;
+    attachCustomilyLearnQ();
+    console.log('attached 3rd try');
+  }, 5000);
+  
+  setTimeout(function() {
+    if (window.attachedLearnQ) return;
+    attachCustomilyLearnQ();
+    console.log('attached 4th try');
+  }, 7500);
+  
+  
+  // not all products have a customily button
+  const regularAddToCartBtn = document.querySelector('.purchase-details .add_to_cart ');
+  if ( regularAddToCartBtn ) {
+    regularAddToCartBtn.addEventListener('click',function (){
+	 console.log('regular add to cart');
+     _learnq.push(['track', 'Added to Cart', item]);
+     console.log('regular learnq update: ', _learnq);
+
+   });
+  }
+
+  // tried to add an event emitted in the Customily interface
+  // https://help.customily.com/en/article/add-your-own-javascript-code-to-the-product-personalization-page
+  	document.addEventListener('customily_here', function (e) {
+		console.log('heeeeyyyyyyy, we can hear an event emitted from Customily code!');
+	}, false);
+  
+
+  // this was an attempt to listen for when 
+  // customily is loaded, but the console.log doesn't run.
+  /*window.customilyShopify = {
+    hooks: {
+        onAppLoaded: function(){
+            console.log('event fired from customily!');
+        }
+    }
+  }*/
+};
+
+</script>

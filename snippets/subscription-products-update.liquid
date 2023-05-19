@@ -1,0 +1,208 @@
+<div id="sub_collapse-146097944" class="w-100 collapse show" style="">
+  <div class="ap__card-row">
+    <div id="card-element-146097944" class="col-12 d-none d-md-flex">
+      <div class="account-scent-selector w-100">
+        <div class="row scentSelector_row dsktp d-none d-md-flex">
+          <div class="data-type-right-column col-md-6 col-xl-4">
+            <div class="scent-DisplayList">
+<!--               <h4 class="ap__section-heading">
+                Edit Scents
+                {% comment %}
+                	<span style="" class="d-none">HAS CHANGES!!</span>
+                {% endcomment %}
+              </h4> -->
+              {% for product in collections['soaps'].products %}
+              {%- comment %}<locksmith:93ee>{% endcomment -%}
+                {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.soaps, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+              {%- comment %}</locksmith:93ee>{% endcomment -%}
+              <div class="scent-DisplayItem"
+                   {% for p in line_item.properties %}
+                   {% if p.last contains product.title %}
+                   {% if p.first contains '1' or p.first contains '2' or p.first contains '3' or p.first contains '4' or p.first contains '5'  or p.first contains '6' %}
+                   data-item-value="{% if p.last contains ' X ' %}{{ p.last | split: ' X ' | last }}{% else %}{{ p.last | split: 'Qty -' | last }}{% endif %}"
+                   {% else %}
+                   data-item-value="{{ '0' }}"
+                   {% endif %}
+                   {% endif %}
+                   {% endfor %}
+                   >
+                <div class="current_product_description hide hidden" hide hidden data-match-attr="{{ product.featured_image | img_url : 'master' }}">{{ product.description }}</div>
+                <p class="se_cutom_btn ap__card-text scentTitle" style="cursor: pointer;">{{ product.title }}</p>
+                {%- for p in line_item.properties -%}
+                  {% if p.last contains product.title %}
+                    <div class="scent-displayList_qtyToggle">
+                      <button style='display:none;' class="qtyButton decrease">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                      <input readonly="readonly" class="qtyScreen" min="0"
+                             {% if p.first contains '1' or p.first contains '2' or p.first contains '3' or p.first contains '4' or p.first contains '5'  or p.first contains '6' %}
+                             value="{% if p.last contains ' X ' %}{{ p.last | split: ' X ' | last }}{% else %}{{ p.last | split: 'Qty -' | last }}{% endif %}"
+                             {% else %}
+                             value="{{ '0' }}"
+                             {% endif %}
+                             >
+                      <button style='display:none;' class="qtyButton increase locked">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="data-type-left-column col-md-6 col-xl-8">
+            <div class="data-carousel-scent h-100" style="background: rgb(255, 255, 255);">
+              <div class="scentEditor_image hide">
+                <div class="text-center scentEditor_card">
+                  <img class="scentImage" src="{{ 'https://cdn.shopify.com/s/files/1/1283/2241/files/swanky.png?v=1618581423' }}"> 
+                  <p class="ap__card-text" style="margin: 10px 0px;">Try something new: Swanky Badger uses the <a target="_blank" href="https://swankybadger.com/pages/subscription-page">scents</a> you've selected to pick a scent you may not have tried!</p>
+                </div>
+              </div>
+              <div class="data-carousel-text col-12 data-carousel-fixed-mobile hide">
+                <h4 class="text-limitations ap__section-heading" style="margin-bottom: 14px;">
+                  Scents Selected
+                  <span >(x / x Soaps)</span>
+                </h4>
+                <div data-carousel="" class="container-fluid px-0">
+                  <div class="carousel">
+
+                  </div>
+                </div>
+              </div>
+              <div class="scentEditor_selects scentEditor_selects__TT">
+              <div class="edit-scents-outer">{% include 'edit-scents' %}</div>
+                <div class="d-block w-100">
+                  <div class="form-group text-center">
+                    <p class="selectHeader">Billed &amp; Shipped</p>
+                    <div dir="auto" class="v-select vs--single vs--unsearchable">
+                      <select class="edit_new_bar_value edit_new_bar_value_del">
+                        <option value="Every 1 Month" data-type-del="Every 1 month">Every 1 Month</option>
+                        <option value="Every 2 Months" data-type-del="Every 2 months">Every 2 Months</option>
+                        <option value="Every 3 Months" data-type-del="Every 3 months">Every 3 Months</option>
+                      </select>
+                    </div>
+                    <div class="form-group text-center">
+                      <p class="selectHeader">Number of Bars</p>
+                      <div dir="auto" class="v-select vs--single vs--unsearchable">
+                        <select class="edit_new_bar_value edit_new_bar_value_bar" name="selling_plan" data-rem="{{ line_item.title | remove: ' bars'  | remove: ' Bars' }}">
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:1301>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:1301>{% endcomment -%}
+                          {% if product.title == '4 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="4" data-new-selling-name="{{ '4 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">4</option>
+                          {% endif %}
+                          {% endfor %}
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:1cd8>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:1cd8>{% endcomment -%}
+                          {% if product.title == '6 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="6" data-new-selling-name="{{ '6 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">6</option>
+                          {% endif %}
+                          {% endfor %}
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:0fbc>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:0fbc>{% endcomment -%}
+                          {% if product.title == '8 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="8" data-new-selling-name="{{ '8 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">8</option>
+                          {% endif %}
+                          {% endfor %}
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:7ff4>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:7ff4>{% endcomment -%}
+                          {% if product.title == '10 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="10" data-new-selling-name="{{ '10 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">10</option>
+                          {% endif %}
+                          {% endfor %}
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:33cf>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:33cf>{% endcomment -%}
+                          {% if product.title == '12 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="12" data-new-selling-name="{{ '12 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">12</option>
+                          {% endif %}
+                          {% endfor %}
+                          {% for product in collections['bars'].products %}
+                          {%- comment %}<locksmith:4d34>{% endcomment -%}
+                            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.bars, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                          {%- comment %}</locksmith:4d34>{% endcomment -%}
+                          {% if product.title == '14 Bars' %}
+                          <option class="{{ product.title | handleize  }}" data-bar-featured-img="{{ product.featured_image | img_url: 'master' }}" value="14" data-new-selling-name="{{ '14 Bars' }}" {% for group in product.selling_plan_groups %}{% for selling_plan in group.selling_plans %}data-selling-plan-value="{{ selling_plan.id }}" data-selling-plan-name="{{ selling_plan.name }}"{% endfor %}{% endfor %} data-prod-tag="{% for tag in product.tags %}{% if tag contains 'A-couple' or tag contains 'One Person' or tag contains 'large-family' or tag contains 'small-family' %}{% if tag contains 'large-family' or tag contains 'small-family' %}A {{ tag | replace: '-', ' ' | upcase }}{% else %}{{ tag | replace: '-', ' ' | upcase }}{% endif %}{% endif %}{% endfor %}" data-product-id="{{ product.id }}" data-product-firstvariant-id="{{ product.first_available_variant.id }}">14</option>
+                          {% endif %}
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="save-btn-to-edit btn btn-block btn-primary w-100 action_button_type" style="display: none; max-width: 200px; margin-left: 20px;">Save</button>
+                <div class="cancel_subscription_main">
+                  <button class="btn btn-block btn-primary w-100 cancel_subscription" data-order-id="{{ order.id }}" data-order-name="{{ order.name }}">CANCEL SUBSCRIPTION</button>
+                  <button class="btn btn-block btn-primary w-100 resume_subscription" data-order-id="{{ order.id }}" data-order-name="{{ order.name }}">RESUME SUBSCRIPTION</button>
+                  
+                  
+                  <button class="SW_refill_tonight btn" data-id="">REFILL TONIGHT</button>
+                  <button class="edit_scents btn btn-seondry" data-id="">Edit Contents</button>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cancel_subscription_popup" style="display: none;">
+  <form class="" method="post" action="#" id="cancel_subscription">
+    <span class="close_x">x</span>
+    <div class="cancel_subscription_inner">
+      Are you sure you want to cancel the subscription?
+      <section class="rct_sidebar__content rct_sidebar__content--cancellation-reasons"><p class="rct_cancellation-reasons__title">Select a reason for cancelling your subscription:</p>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601754" class="rct_form__radio" value="1601754"> <label for="retention-strategy-1601754" class="rct_form__label">
+          This is too expensive</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601755" class="rct_form__radio" value="1601755"> <label for="retention-strategy-1601755" class="rct_form__label">
+          This was created by accident</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601756" class="rct_form__radio" value="1601756"> <label for="retention-strategy-1601756" class="rct_form__label">
+          I already have more than I need</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601757" class="rct_form__radio" value="1601757"> <label for="retention-strategy-1601757" class="rct_form__label">
+          I need it sooner</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601758" class="rct_form__radio" value="1601758"> <label for="retention-strategy-1601758" class="rct_form__label">
+          I no longer use this product</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601759" class="rct_form__radio" value="1601759"> <label for="retention-strategy-1601759" class="rct_form__label">
+          I want a different product or variety</label></div>
+        <div class="rct_form__group rct_form__group--radio"> <input type="radio" name="retention_strategy_id" id="retention-strategy-1601760" class="rct_form__radio" value="1601760"> <label for="retention-strategy-1601760" class="rct_form__label">
+          Other reason</label></div>
+      </section>
+      <div class="text-center">
+        <div class="text-center">
+          <span class="btn btn-block btn-primary w-100 no_proceed_cancel">NO</span>
+        </div>
+        <div class="text-center">
+          <span class="btn btn-block btn-primary w-100 yes_proceed_cancel">YES</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="refill_subscription_popup" style="display: none;">
+  <form class="" method="post" action="#" id="refill_subscription">
+    <span class="refill_close_x">x</span>
+    <div class="refill_subscription_inner">
+      Are you sure want to change date and refill tonight this bar/box?
+      <div class="text-center">
+        <div class="text-center">
+          <span class="btn btn-block btn-primary w-100 no_proceed_refill">NO</span>
+        </div>
+        <div class="text-center">
+          <span class="btn btn-block btn-primary w-100 yes_proceed_refill">YES</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

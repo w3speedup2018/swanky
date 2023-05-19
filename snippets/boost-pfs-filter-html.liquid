@@ -1,0 +1,54 @@
+{%- capture boost_pfs_layout -%}
+{%- case layout -%}
+
+{%- when 'productGridItemHtml' -%}
+{% raw %}
+<div class="{{itemColumnNumberClass}} thumbnail {{itemCollectionGroupSmallClass}} quick-shop-style--{{quickShopStyle}} product-{{itemId}}" data-boost-theme-quickview="{{itemId}}">
+    <div class="product-wrap {{flipImageClass}}">
+      <div class="relative product_image">
+        <a href="{{itemUrl}}">
+          {{itemImages}}
+        </a>
+        {{itemProductInfoHover}}
+      </div>
+    </div>
+    <a class="product-info__caption {{itemHiddenClass}}" href="{{itemUrl}}">
+      {{itemProductInfo}}
+    </a>
+    {{itemColorSwatchesInline}}
+</div>
+{% endraw %}
+
+{%- when 'quickViewBtnHtml' -%}
+<span data-fancybox-href="#fancybox-product-[[itemId]]" class="quick_shop ss-icon" data-gallery="product-[[itemId]]-gallery">
+	<span class="icon-plus"></span>
+</span>
+
+{%- when 'newRowHtml' -%}
+<br class="clear product_clear" />
+
+{%- when 'previousHtml' -%}
+<span class="prev"><a href="[[itemUrl]]">« {{ 'shopify.pagination.previous' | t }}</a></span>
+
+{%- when 'nextHtml' -%}
+<span class="next"><a href="[[itemUrl]]">{{ 'shopify.pagination.next' | t }} »</a></span>
+
+{%- when 'pageItemHtml' -%}
+<span class="page"><a href="[[itemUrl]]">[[itemTitle]]</a></span>
+
+{%- when 'pageItemSelectedHtml' -%}
+<span class="page current">[[itemTitle]]</span>
+
+{%- when 'pageItemRemainHtml' -%}
+<span>[[itemTitle]]</span>
+
+{%- when 'paginateHtml' -%}
+[[previous]][[pageItems]][[next]]
+
+{%- when 'sortingHtml' -%}
+[[sortingItems]]
+{%- endcase -%}
+
+{%-  endcapture -%}
+{%- assign str = '}}' -%}
+{{- boost_pfs_layout | json | replace: '[[', '{{' | replace: ']]', str -}}

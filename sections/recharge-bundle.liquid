@@ -1,0 +1,721 @@
+{% assign product_handle = product.handle %}
+{% assign box_product = all_products[product_handle] %}
+
+<link rel="stylesheet" href="https://static.rechargecdn.com/assets/bundling-widget/src.css" referrerpolicy="origin">
+
+<style>
+.rb-app {
+  --rb-app-bg: {{ section.settings.rb_theme_bg }};
+  
+  --rb-body-color: {{ section.settings.rb_theme_other_text }};
+  --rb-body-color-10: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 10 }};
+  --rb-body-color-20: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 20 }};
+  --rb-body-color-30: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 30 }};
+  --rb-body-color-40: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 40 }};
+  --rb-body-color-50: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 50 }};
+  --rb-body-color-60: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 60 }};
+  --rb-body-color-70: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 70 }};
+  --rb-body-color-80: {{ section.settings.rb_theme_other_text | color_mix: '#ffffff', 80 }};
+
+  --rb-brand-color: {{ section.settings.rb_theme_color }};
+  --rb-brand-color-10: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 10 }};
+  --rb-brand-color-20: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 20 }};
+  --rb-brand-color-30: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 30 }};
+  --rb-brand-color-40: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 40 }};
+  --rb-brand-color-50: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 50 }};
+  --rb-brand-color-60: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 60 }};
+  --rb-brand-color-70: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 70 }};
+  --rb-brand-color-80: {{ section.settings.rb_theme_color | color_mix: '#ffffff', 80 }};
+
+  /* Container */
+  --rb-page-width: {{ section.settings.rb_spacing_width }}px;
+
+  /* Typography */
+  --font-size-5: {{ section.settings.rb_text_size }};
+
+  /* Spacing */
+  --rb-base-spacing: {{ section.settings.rb_spacing_margins }};
+
+  /* Buttons */
+  --rb-btn-bg: {{ section.settings.rb_theme_color }};
+  --rb-btn-color: {{ section.settings.rb_theme_text }};
+  --rb-btn-bg-hover: {{ section.settings.rb_theme_color | color_mix: section.settings.rb_theme_other_text, 80 }};
+  --rb-btn-color-hover: {{ section.settings.rb_theme_text }};
+  --rb-btn-radius: {{ section.settings.rb_buttons_corners }}px;
+  --rb-btn-pady: calc({{ section.settings.rb_buttons_size }} / 2);
+  --rb-btn-padx: calc({{ section.settings.rb_buttons_size }});
+
+  /* Box builder */
+  --rb-item-width: calc(100% / {{ section.settings.rb_builder_items_per_row | times: 1 }});
+  --rb-item-aspect-ratio: {{ section.settings.rb_builder_aspect_ratio }};
+  --rb-item-radius: {{ section.settings.rb_builder_radius }}px;
+}
+
+@media screen and (min-width: 30em) {
+  .rb-app {
+    --rb-item-width: calc(100% / {{ section.settings.rb_builder_items_per_row_ns }});
+  }
+}
+
+/* box items display on mobile */ 
+{% if section.settings.rb_builder_items_per_row == '2' %}
+  @media screen and (max-width: 30em) {
+    .rb-item {
+      flex-direction: column;
+    }
+    .rb-item-content {
+      width: 100%;
+      padding: 0;
+    }
+    .rb-item-img {
+      width: 100%;
+    }
+  }
+{% endif %}
+  
+.section-wrapper--product {
+  display: block;
+  width: 100%;
+}
+</style>
+
+<style>
+  @media only screen and (max-width: 798px) {
+    body {
+      padding-top: 72.516px;
+    }
+    #header .top_bar a.mobile_logo,
+    #header .top_bar .icon-search {
+      z-index: unset;
+    }
+  }
+  #fsb_placeholder #fsb_background {
+    z-index: 2!important;
+  }
+  .mini_cart, .nav a.mini_cart,
+  .search_container input,
+  .search_form .search-submit {
+    z-index: unset;
+  }
+  .rb-app a {
+    outline: none;
+  }
+  .rb-app a:not(.rb-step-anchor).disabled {
+    opacity: 0.4;
+  }
+  .rb-container {
+    width: 1200px;
+    padding-right: 10px;
+    padding-left: 10px;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .rb-options-container {
+    margin-right: -10px;
+    margin-left: -10px;
+  }
+  .rb-btn,
+  a.rb-btn {
+    background: #03a196;
+    color: #ffffff;
+    border: 1px solid #03a196;
+    padding: 12px 30px;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1;
+    vertical-align: top;
+    font-family: Oswald, sans-serif;
+    font-size: 1.25rem;
+    font-weight: normal;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+  }
+  .rb-btn:hover,
+  a.rb-btn:hover {
+    background: #04736b;
+    border: 1px solid #04736b;
+    color: #ffffff;
+  }
+  .rb-btn span,
+  .rb-btn:hover span {
+    color: #ffffff;
+  }
+  .rb-nav {
+    background-color: #00a799;
+    color: #b8f6f0;
+  }
+  .rb-nav .rb-btn,
+  .rb-nav a.rb-btn {
+    background: #ffffff;
+    color: #03a196;
+  }
+  
+  .rb-nav .rb-btn span, 
+  .rb-nav .rb-btn:hover span {
+  	color: #03a196;
+  }
+  
+  
+  .rb-nav .rb-btn:hover,
+  .rb-nav a.rb-btn:hover {
+    color: #04736b;;
+  }
+  .rb-nav,
+  .rb-step-anchor,
+  .rb-step-anchor span {
+    color: #b8f6f0;
+    font-weight: bold;
+  }
+  .rb-nav .rb-arrow-svg {
+    color: #ffffff;
+  }
+  .rb-app a {
+    outline: none;
+  }
+ 
+  .rb-step,
+  .rb-start-over {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.72px;
+  }
+  .rb-step-header {
+    width: 700px;
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 1rem;
+  }
+  .rb-step-title {
+    margin-bottom: .5rem;
+    font-size: 27px;
+  }
+  .rb-description-callout {
+    margin-top: 1rem;
+    display: block;
+    font-weight: bold;
+    letter-spacing: 0.72px;
+  }
+  .rb-options-label {
+    display: none;
+  }
+   .rb-option {
+    text-align: center;
+  }
+  .rb-option,
+  .rb-frequency {
+    font-size: 1rem;
+    font-weight: 400;   
+    background: #ededed;
+    border: 2px solid transparent;
+  }
+  .rb-option--selected,
+  .rb-option--selected span {
+    border-color: #998640;
+    color: #998640;
+  }
+  .rb-option-image-wrapper {
+    padding-bottom: 66.6%;
+    margin-bottom: 1rem;
+  }
+  
+  .rb-option-label,
+  .rb-option-label span,
+  .rb-frequency-label,
+  .rb-frequency-label span {
+    font-family: Oswald, sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.34px;
+    font-size: 1.25rem;
+  }
+  .rb-option-label {
+    margin-bottom: .25rem;
+  }
+  .rb-input-svg {
+    width: 1.25rem;
+  }
+  .rb-option-price,
+  .rb-option-price span {
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  .rb-option .aspect-ratio--object,
+  .rb-option img {
+	mix-blend-mode: darken;
+  }
+
+  .rb-input[type="number"] {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+    width: 4rem;
+  }
+
+  .rb-item .rb-btn {
+    padding: 12px 20px;
+  }
+  .rb-item .rb-title {
+    text-transform: uppercase;
+    font-family: Oswald, sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .rb-frequency .rb-radio-icon {
+    display: none;
+  }
+  .rb-frequency-select {
+    font: inherit;
+  }
+  .rb-modal-image {
+    max-height: 100%;
+  }
+  .rb-order-section-title {
+    border-bottom: 1px solid;
+  }
+  .rb-order-info {
+    display: none;
+  }
+  .rb-back-link.disabled {
+    display: none;
+  }
+  .rb-badge {
+    justify-content: center;
+  }    
+  .rb-order-group-title,
+  .rb-order-box-variant,
+  .rb-order-box-price,
+  .rb-order-line-price,
+  .rb-order-totals  {
+    display:none;
+  }
+  .rb-order-box-details {
+    width: 100%;
+  }
+  .rb-box-contents-title,
+  .rb-order-box-product {
+    border-bottom: 1px solid;
+    font-size: 21px;
+    padding: 7px 0;
+    width: 100%;
+  }
+  .rb-option {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+  .rb-option:after {
+    background: rgba(27, 31, 35, 0.9);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .25rem;
+    font-weight: 400;
+    font-size: 13px;
+    text-transform: none;
+  }
+  .rb-option--selected:after {
+    background: #998640;
+  }
+  .rb-option:first-of-type:after {
+    content: "Consider for lighter users";
+  }
+  .rb-option:nth-of-type(2):after {
+    content: "Enough to shower once per day";
+  }
+  .rb-option:nth-of-type(3):after {
+    content: "Consider if extra hairy or showering often";
+  }
+  .rb-multi-step:not([data-rb-product-id="6788610556096"]) .rb-frequency-price > span:after {
+    content: " + Free shipping";
+  }
+  [data-rb-product-id="6788610556096"] .rb-frequency-price > span:not(.rb-swap-today):after {
+    content: " + $4.99 shipping";
+  }
+ 
+  .rb-frequency-label span:after {
+    content: "(Cancel any time)";
+    display: block;
+    font-size: 13px;
+    font-family: Roboto, sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  /* Starter Kit */
+  .rb-swap-price {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  [data-rb-product-id="6788610556096"] .rb-option-price {
+    display: none;
+  }
+  [data-rb-product-id="6788610556096"] .rb-order-box-product {
+    display: block;
+  }
+  [data-rb-product-id="6788610556096"] .rb-order-box-product:before {
+    content: "Today's Order";
+    font-weight: bold;
+  }
+  [data-rb-product-id="6788610556096"] .rb-box-contents-title:before,
+  [data-rb-product-id="6788610556096"] .rb-order-box-product:before {
+    font-weight: 500;
+  }
+  [data-rb-product-id="6788610556096"] .rb-order-box-product:before {
+    content: "Today's Order: ";
+  }
+  [data-rb-product-id="6788610556096"] .rb-box-contents-title:before {
+    content: "Full Order: ";
+  }
+  [data-rb-product-id="6788610556096"] .rb-box-contents-title{
+    border-bottom: none;
+  }
+  [data-rb-product-id="6788610556096"] .rb-box-contents-group {
+    border-bottom: 1px solid;
+  }
+  .rb-swap-today,
+  .rb-swap-first-subscription-charge {
+    font-weight: bold;
+  }
+	.rb-app {
+       --rb-nav-color: white;
+      --rb-nav-step-number-bg: #00a799;
+  		--rb-nav-step-number-bg-complete: white;
+      --rb-option-width: 300px;
+    }
+      .rb-step-index.rb-step-index--complete {
+        color: #00a799;
+      }
+      ..rb-step-index {
+        border-color: #b8f6f0;
+      }
+</style>
+
+
+<section id="recharge-bundle" data-section-id="{{ section.id }}">
+  <div id="bundling-app"></div>
+</section>
+
+{% capture product_json %}{% include 'recharge-bundle-product-json', product: box_product %}{% endcapture %}
+<script type="text/javascript">
+  window.BoxConfig = {
+    template: 'product',
+    product: {{ product_json }},
+    customLocale: {{ 'r_html' | t | json }}
+  };
+</script>
+
+<script src="https://static.rechargecdn.com/assets/bundling-widget/src.js" referrerpolicy="origin"></script>
+
+<script>
+ //scroll selected option to center on mobile
+$(document).ready(function() {
+  if (window.innerWidth <= 480) {
+    document.getElementsByClassName("rb-option--selected").forEach(element => {
+      element.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+    });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "Recharge Bundle",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Theme colors"
+    },
+    {
+      "type": "color",
+      "id": "rb_theme_color",
+      "label": "Brand color",
+      "info": "This color is used for buttons, progress bars and navigation.",
+      "default": "#00C09E"
+    },
+    {
+      "type": "color",
+      "id": "rb_theme_text",
+      "label": "Text in buttons",
+      "info": "All text that appears in buttons and navigation will use this color.",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "rb_theme_other_text",
+      "label": "Other text",
+      "info": "This color will be used for all text that sits on the main page background.",
+      "default": "#283965"
+    },
+    {
+      "type": "color",
+      "id": "rb_theme_bg",
+      "label": "Background",
+      "info": "Make sure this has enough contrast with your brand and text colors.",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "radio",
+      "id": "rb_text_size",
+      "label": "Text size",
+      "options": [
+        {
+          "value": "21px",
+          "label": "Big"
+        },
+        {
+          "value": "16px",
+          "label": "Medium"
+        },
+        {
+          "value": "14px",
+          "label": "Small"
+        }
+      ],
+      "default": "16px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "rb_spacing_width",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Maximum width",
+      "info": "This sets the maximum width of the bundle builder. It only applies to large screens (computers and tablets).",
+      "default": 1220
+    },
+    {
+      "type": "radio",
+      "id": "rb_spacing_margins",
+      "label": "Margins",
+      "info": "This controls spacing between elements.",
+      "options": [
+        {
+          "value": "24px",
+          "label": "Wide"
+        },
+        {
+          "value": "15px",
+          "label": "Medium"
+        },
+        {
+          "value": "10px",
+          "label": "Tight"
+        }
+      ],
+      "default": "15px"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "radio",
+      "id": "rb_buttons_size",
+      "label": "Button size",
+      "options": [
+        {
+          "value": "24px",
+          "label": "Large"
+        },
+        {
+          "value": "15px",
+          "label": "Medium"
+        },
+        {
+          "value": "10px",
+          "label": "Tight"
+        }
+      ],
+      "default": "15px"
+    },
+    {
+      "type": "radio",
+      "id": "rb_buttons_corners",
+      "label": "Button corners",
+      "options": [
+        {
+          "value": "0",
+          "label": "Square"
+        },
+        {
+          "value": "4",
+          "label": "Gently rounded"
+        },
+        {
+          "value": "50",
+          "label": "Fully rounded"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "header",
+      "content": "Box Builder"
+    },
+    {
+      "type": "range",
+      "id": "rb_builder_items_per_row_ns",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Products per row (large screens)",
+      "info": "This controls how many products appear per row for large screens",
+      "default": 4
+    },
+    {
+      "type": "radio",
+      "id": "rb_builder_items_per_row",
+      "label": "Products per row (small screens)",
+      "options": [
+        {
+          "value": "1",
+          "label": "One: product name and amount appears next to image"
+        },
+        {
+          "value": "2",
+          "label": "Two: product name and amount appears beneath image"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "radio",
+      "id": "rb_builder_aspect_ratio",
+      "label": "Product image aspect ratio",
+      "options": [ 
+        {
+          "value": "100%",
+          "label": "Square"
+        },
+        {
+          "value": "133.33%",
+          "label": "Portrait"
+        },  
+        {
+          "value": "75%",
+          "label": "Landscape"
+        }
+      ],
+      "default": "100%"
+    },
+    {
+      "type": "radio",
+      "id": "rb_builder_radius",
+      "label": "Product image corners",
+      "options": [ 
+        {
+          "value": "0",
+          "label": "Square"
+        },
+        {
+          "value": "4",
+          "label": "Rounded"
+        }
+      ],
+      "default": "4"
+    }
+  ],
+  "templates": ["product"],
+  "locales": {
+    "en": {
+      "r_html": {
+        "outOfStock":"Out of Stock",
+        "boxContents":"Contents",
+        "subscriptionPage":{
+          "contentsFor":"Contents for your {nextChargeDate} order",
+          "updateContents":"Update contents",
+          "select":"Select {title} contents",
+          "your":"Your {title}",
+          "save":"Save",
+          "saving":"Saving your changes",
+          "saved":"Your changes have been saved!",
+          "yourNextOrder":"Your next order"
+        },
+        "remainder":{
+          "add":"Choose {remainder}",
+          "remove":"Remove {remainder}"
+        },
+        "boxItem":{
+          "add":"+ Add",
+          "remove":"× Remove"
+        },
+        "alert":{
+          "planChanged":"Plan changed - update your selections to continue",
+          "add":"Choose {remainder} from {collectionTitle} to continue",
+          "remove":"Remove {remainder} from {collectionTitle} to continue",
+          "collectionComplete":"{collectionTitle} selection completed!",
+          "complete":"Bundle completed! You can add to cart now"
+        },
+        "addToCart":{
+          "completed":"Add to cart",
+          "add":"Add {remainder} to continue",
+          "added":"Added",
+          "remove":"Remove {remainder} to continue",
+          "addMore":"Choose more to continue",
+          "removeSome":"Remove some to continue",
+          "soldOut":"Sold out",
+          "error":"Add to cart failed"
+        },
+        "multiStep":{
+          "collectionStep":{
+            "select":"Select {count} {title}"
+          },
+          "summaryStep":{
+            "addons":"Add-ons",
+            "total":"Order total"
+          }
+        },
+        "filters":{
+          "label":"Filters",
+          "clear":"Clear all"
+        },
+        "addOns":{
+          "addOns":"Add-ons",
+          "title":"Feel like a little more?",
+          "description":"Add some delicious extras to your plan. We’ll send these with every delivery, until you tell us not to."
+        },
+        "oneOffExtras":{
+          "extras":"One-off extras",
+          "title":"Your order’s in! Fancy some one-off treats?",
+          "description":"Products you select here will only be added to your first delivery.",
+          "summary":"Summary",
+          "otherItems":"Regular delivery",
+          "total":"Total cost for your first delivery",
+          "addToCart":"Add extras to cart"
+        },
+        "month":"month | months",
+        "week":"week | weeks",
+        "day":"day | days",
+        "frequency":{
+          "label": "Frequency",
+          "subscriptionLabel": "Subscribe",
+          "oneTimeLabel": "Only once",
+          "option": "Only once|Every {unit}|Every {count} {unit}"
+        },
+        "back":"Go back",
+        "next":"Next",
+        "goToCart":"Proceed to cart",
+        "close":"Close"
+      }
+    }
+  },
+  "presets": [
+    {
+      "name": "Recharge Bundle",
+      "category": "Apps"
+    }
+  ]
+}
+{% endschema %}

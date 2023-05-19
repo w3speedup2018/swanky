@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {%assign url_match = canonical_url  %}
+    {% if url_match contains '/account/login' or url_match contains '/search' or url_match contains '/checkouts' or url_match contains '/checkout' or url_match contains '/cart' or url_match contains '/account' or url_match contains '/apps/secure-checkout' or url_match contains '/checkout?discount' or url_match contains '/collections' or url_match contains '/pages/watch-home' or url_match contains '/pages/reviews'or url_match contains '/pages/cc' or url_match contains '/sitemap_products_1.xml?from=6001546945&to=9445993217'  or url_match contains '/sitemap_products_1.xml?from=6001546945&to=8038225601' or url_match contains '/pages/personalized-wallet' or url_match contains '/pages/behere' or url_match contains '/behere' or url_match contains '/blogs/gift-guides/gifts-for-men'  or url_match contains '/personalized-leather-wallet-diamond' or url_match contains '/pages/valentines-day-page' or url_match contains '/pages/flask-offer' or url_match contains '/pages/loyalty-rewards-program' or url_match contains '/pages/swanky-banter-blog' or url_match contains '/blogs/gift-guides/top-5-holiday-gifts-for-guys' or url_match contains '/blogs/gift-guides/whiskey-flowers-for-men' or url_match contains '/pages/shameless' or url_match contains '/SHAMELESS' or url_match contains '/pages/swanky-badger-reviews' or url_match contains '/pages/frontpage' or url_match contains '/pages/how-it-works' or url_match contains '/pages/about-us' or url_match contains '/products/personalized-whiskey-decanter-vintage' or url_match contains '/pages/customer-gallery' or url_match contains '/products/arrows-phone-case-brown' or url_match contains '/pages/emp' or url_match contains '/blogs/gift-guides/top-5-gifts' or url_match contains '/pages/watches-bamboo-tailored' or url_match contains '/pages/legal' or url_match contains '/pages/valentine-giveaway' or url_match contains '/pages/watches-ebony-links' or url_match contains '/blogs/gift-guides?page=2' or url_match contains '/blogs/groomsmen/wedding-jargon-demystified' or url_match contains '/pages/the-perfect-gift-for-fathers-day-check-out-some-of-our-dads-getting-their-gifts' or url_match contains '/pages/wallet-gallery' or url_match contains '/pages/summer-wallet-giveaway' or url_match contains '/pages/watches-sand-black' or url_match contains '/pages/watches-sand-classic' or url_match contains '/pages/watches-sand-links' or url_match contains '/pages/watches-bamboo-classic' or url_match contains '/blogs/gift-guides?page=3' or url_match contains '/pages/kendra-s-story' or url_match contains '/blogs/news/you-re-engaged-now-what' or url_match contains '/products/black-sandalwood-wooden-watch-groomsmen/' %}
+    	<meta name="robots" content="noindex">
+    {% elsif handle == 'groomsmen-gifts' %}
+    	<meta name="robots" content="noindex">
+    {% elsif handle == '5-unique-groomsmen-gifts-for-your-significant-brothers' %}
+    	<meta name="robots" content="noindex">
+    {% else %}
+    	<meta name="robots" content="index,follow">
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% capture zp_header_capture_html %}
+      {% assign zp_use_favicon = true %}
+      {% assign zp_failed_includes = false %}
+      {% capture zp_include_html %}
+        {% include 'header-scripts.zipifypages' %}
+      {% endcapture %}
+      {% if zp_include_html contains 'Liquid error: Could not find asset snippets/header-scripts.zipifypages.liquid' or zp_include_html contains 'Liquid error: Could not find asset snippets/page-content-parser.zipifypages.liquid' %}
+        {% assign zp_failed_includes = true %}
+        {% assign zp_include_html = '' %}
+      {% endif %}
+    {% endcapture %}{{ zp_include_html | strip }}{% assign zp_include_html = '' %}{% assign zp_header_capture_html = '' %}
+  </head>
+  <body>
+    {% if zp_failed_includes == true %}{{ page.content }}{% else %}{% capture zp_header_capture_html %}
+        {% capture zp_include_html %}
+          {% include 'page-content.zipifypages' %}{% include 'page-footer.zipifypages' %}
+        {% endcapture %}
+        {% if zp_include_html contains 'Liquid error: Could not find asset snippets/page-content.zipifypages.liquid' or zp_include_html contains 'Liquid error: Could not find asset snippets/page-footer.zipifypages.liquid' %}
+          {% assign zp_failed_includes = true %}
+          {% assign zp_include_html = '' %}
+        {% endif %}
+      {% endcapture %}{% if zp_failed_includes == true %}{{ page.content }}{% else %}{{ zp_include_html | strip }}{% endif %}{% assign zp_include_html = '' %}{% endif %}
+  </body>
+</html>{% if zp_failed_includes == false %}{% layout none %}{% endif %}

@@ -1,0 +1,30 @@
+<script id="bss-ltap-fl-redirect" type="text/javascript">
+let pages = [
+  {
+      name: 'login',
+      href: '/account/login',
+      id: 'customer_login'
+  }, {
+      name: 'register',
+      href: '/account/register',
+      id: 'create_customer'
+  }
+];
+const index = pages.findIndex(page => page.href === window.location.pathname);
+if(index !== -1) {
+  insertElement(pages[index].id);
+}
+
+function insertElement(id) {
+  const BSS = JSON.parse(localStorage.getItem("BSS")) || "";
+  let createCustomer = document.getElementById(id);
+  if (BSS && BSS.redirect_url && createCustomer) {
+      const returnToInput = document.createElement('input');
+      returnToInput.type = 'hidden';
+      returnToInput.name = 'return_to';
+      returnToInput.value = BSS.redirect_url;
+      createCustomer.appendChild(returnToInput);
+      localStorage.removeItem("BSS");
+  }
+}
+</script>

@@ -1,0 +1,123 @@
+<div class="comman_pages_subscribe one_step_subscription">
+  <div class="subscribenumber">
+    <div class="container">
+      <div data-step='1' class="cmn active"><span>1</span><p> {{ section.settings.txt1}}</p></div>
+      <div data-step='2' class="cmn"><span>2</span> <p>{{ section.settings.txt2}}</p></div>
+      <div data-step='3' class="cmn"><span>3</span> <p>{{ section.settings.txt3}}</p></div>
+      <div data-step='4' class="cmn"><span>4</span><p> {{ section.settings.txt4}}</p></div>
+    </div>
+  </div>
+  <div class="subscription_step_one"> 
+    <div class="container">
+      <h2>{{ section.settings.title }}</h2>
+      <div class="loop_box_cmn">
+        <div class="loop_box" data-step='1'>
+          {% for block in section.blocks %}
+          {% assign collection1 = collections[block.settings.collection] %}
+          <div class="single_select loop" data-id="{{ collection1.id }}" data-soap={% if block.settings.small != blank %}"{{ block.settings.small }}"{% endif %} data-static="{{forloop.index}}">
+            <div class="data">
+              <div class="left_data">
+                {% if block.settings.small != blank %}
+                <h5> {{ block.settings.small }}</h5>
+                {% endif %}
+                <span class="points_txt"> {{ block.settings.extra }}</span>
+              </div>
+              {% if block.settings.image != blank %}
+              <div class="image"><img class="show" src="{{ block.settings.image| img_url:'master' }}">
+                <img style="display:none;" class="hover" src="{{ block.settings.hoverimage | img_url:'master' }}">
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="subscriptionbtn"> 
+          <div class="btn_step">
+            <div class="page-width">
+              <a  class='btn prev' href="/pages/selection-product">Back</a>
+              <button  class='btn next'>Next Step</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Subscription Step One",
+    "settings": [
+{
+      "type": "text",
+      "id": "txt1",
+      "label":"Text"
+},
+{
+      "type": "text",
+      "id": "txt2",
+      "label":"Text"
+},
+{
+      "type": "text",
+      "id": "txt3",
+      "label":"Text"
+},
+{
+      "type": "text",
+      "id": "txt4",
+      "label":"Text"
+},
+{
+      "type": "header",
+      "content": "Heading"
+},
+ {
+      "type": "text",
+      "id": "title",
+      "label":"Heading"
+}
+],
+ "blocks": [
+    {
+      "type": "box",
+      "name": "box",
+      "settings": [
+    
+       {
+      "type": "text",
+      "id": "small",
+      "label":"Text"
+},
+    {
+      "type": "text",
+      "id": "extra",
+      "label":"Extra Text"
+},
+{
+      "type": "image_picker",
+      "id": "image",
+      "label":"Image"
+},
+{
+      "type": "image_picker",
+      "id": "hoverimage",
+      "label":"Hover Image"
+},
+{
+      "type": "collection",
+      "id": "collection",
+      "label":"Collection"
+}
+        
+      ]
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

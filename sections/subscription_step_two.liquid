@@ -1,0 +1,140 @@
+<div class="comman_pages_subscribe productsloop"> 
+  <div class="subscribenumber">
+    <div class="container">
+      <div data-step='1' class="cmn active"><span>1</span><p> {{ section.settings.txt1}}</p></div>
+      <div data-step='2' class="cmn active"><span>2</span><p> {{ section.settings.txt2}}</p></div>
+      <div data-step='3' class="cmn"><span>3</span><p> {{ section.settings.txt3}}</p></div>
+      <div data-step='4' class="cmn"><span>4</span><p> {{ section.settings.txt4}}</p></div>
+    </div>
+  </div>
+  <div class="subscription_step_two"> 
+    <div class="container"> 
+      <div class="loop_box_cmn">
+        <div class="loop_box" data-step='2'>
+          <h2>{{ section.settings.heading }}</h2>
+          <p class="subtxt">{{ section.settings.content }}</p>
+          <span class="saving_ship">{{ section.settings.ship }}</span>
+          {% for block in section.blocks %}
+          {% assign collection1 = collections[block.settings.collectionnew] %}
+          <div class="loop_collection"  data-id="{{ collection1.id }}" style="display:none">
+            {%- comment %}<locksmith:9af9>{% endcomment -%}
+              {%- assign locksmith_e743_forloop__size = 0 %}{% for product in collection1.products %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collection1, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_e743_forloop__size = locksmith_e743_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_e743_forloop__index = nil -%}
+            {%- comment %}</locksmith:9af9>{% endcomment -%}
+            {% for product in collection1.products %}
+            {%- comment %}<locksmith:61e3>{% endcomment -%}
+              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collection1, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_e743_forloop__index == nil %}{% assign locksmith_e743_forloop__index = 1 %}{% assign locksmith_e743_forloop__index0 = 0 %}{% else %}{% assign locksmith_e743_forloop__index = locksmith_e743_forloop__index | plus: 1 %}{% assign locksmith_e743_forloop__index0 = locksmith_e743_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_e743_forloop__index == 1 %}{% assign locksmith_e743_forloop__first = true %}{% else %}{% assign locksmith_e743_forloop__first = false %}{% endif %}{% if locksmith_e743_forloop__index == locksmith_e743_forloop__size %}{% assign locksmith_e743_forloop__last = true %}{% else %}{% assign locksmith_e743_forloop__last = false %}{% endif %}{% assign locksmith_e743_forloop__rindex = locksmith_e743_forloop__size | minus: locksmith_e743_forloop__index | minus: 1 %}{% assign locksmith_e743_forloop__rindex0 = locksmith_e743_forloop__size | minus: locksmith_e743_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+            {%- comment %}</locksmith:61e3>{% endcomment -%}
+            {% assign selling_id =  '' %}
+            {% assign selling_name =  '' %}
+            {% for group in product.selling_plan_groups %}
+            {% for selling_plan in group.selling_plans %}
+            {% assign selling_id =  selling_plan.id %}
+            {% assign selling_name =  selling_plan.name %}
+            {% endfor %}
+            {% endfor %}
+            <b hide hidden>{{ product.id }}</b>
+            <div class="single_select loop" productid="{{product.id }}" selling_name="{{ selling_name }}" selling_id="{{ selling_id }}" databar="" {% for variant in product.variants limit:1%}datastep2="{{variant.id}}"{% endfor%} data-static-two="{{locksmith_e743_forloop__index}}">
+              <div class="data">
+                {%- include 'subscription_prod_form' -%}
+                <span class="extra_product mobile">{{ product.metafields.Product.box_bottom_text }}</span>
+                <div class="data_inner">
+                  <div class="top_sec">
+                    <div class="title_portion">
+                      <h5>{{product.title}}</h5>
+                      <span class="money"> {{product.price | money  }}</span>
+                    </div>
+                    <div class="delivery_portion">
+                      <p>{{ product.metafields.Product.shipping }} </p>
+                    </div>
+                  </div>
+                  <div class="image_portion">
+                    {%- assign preview_image = product.featured_image  -%}
+                    {% if product.images.size > 0 %} 
+                    <img src="{{preview_image | img_url:'master'}}">
+                    {% endif %}
+                    <span class="save_product">{{ product.metafields.Product.save_per_year }}</span>
+                    <span class="extra_product desk">  {{ product.metafields.Product.box_bottom_text }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="subscriptionbtn"> 
+          <div class="btn_step">
+            <div class="page-width">
+              <button class='btn prev'>Back</button>
+              <button  class='btn next'>Next Step</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Subscription Step Two",
+     "max_blocks":4,
+    "settings": [
+	{
+      "type": "text",
+      "id": "txt1",
+      "label":"Text"
+	},
+	{
+      "type": "text",
+      "id": "txt2",
+      "label":"Text"
+	},
+	{
+      "type": "text",
+      "id": "txt3",
+      "label":"Text"
+	},
+	{
+      "type": "text",
+      "id": "txt4",
+      "label":"Text"
+	},
+	{
+      "type": "text",
+      "id": "heading",
+      "label":"Heading"
+	},
+	{
+      "type": "text",
+      "id": "content",
+      "label":"Content"
+	},
+	{
+      "type": "text",
+      "id": "ship",
+      "label":"Shipment"
+	}
+],
+"blocks": [
+    {
+      "type": "box",
+      "name": "box",
+      "settings": [
+   {
+      "type": "collection",
+      "id": "collectionnew",
+      "label":"Collection"
+	}
+   ]
+  }
+ ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

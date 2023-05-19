@@ -1,0 +1,84 @@
+<div class="custom_product_first">
+   <div class="container">
+     {% if section.settings.heading != blank %}
+     <h2>{{ section.settings.heading }}</h2>
+     {% endif %}
+        {% assign product = all_products[section.settings.product] %}
+     
+     <div class="first_sub_loop" >
+         <div class="left">
+            {%- assign preview_image = product.featured_image  -%}
+           <a href="{{ product.url }}">
+            <div class="image">
+             <img src="{{preview_image | img_url:'master'}}">
+                   </div>
+           </a>
+         </div>
+         <div class="right">
+           <h5>          <a href="{{ product.url }}">{{product.title}}</a></h5>
+           <span class="money"><span class="txt">Price: </span>{{ product.price | money_without_trailing_zeros   }}</span>
+           <div class="desc">{{ product.description}}</div>
+           <div class="img_block">
+             <p>Design</p>
+           {% for block in section.blocks %}
+                 <div class="img_block_inner">
+             <img src="{{block.settings.image | img_url:'master'}}">
+                         </div>
+             {% endfor %}
+           </div>
+     </div>
+     </div>
+     
+<form class='custom_product_send' method='post' action='/cart/add'>
+					
+<input type='hidden'  name='id' value='{{product.variants.first.id}}'/>
+  <input type='hidden'  name='quantity' value='1'/>
+</form>
+     <div class="btns">
+     <button class='btn prev' varint_id={{product.variants.first.id}}>Add to cart</button>
+       <a href="/pages/subscription-page">Subscribe & Save 25%</a>
+    </div>
+
+  
+  </div>
+  </div>
+{% schema %}
+  {
+    "name": "Select Product",
+    "settings": [
+{
+      "type": "text",
+      "id": "heading",
+      "label":"Heading"
+},
+   {
+      "type": "product",
+      "id": "product",
+      "label":"product"
+}
+
+],
+"blocks": [
+    {
+      "type": "Logo",
+      "name": "Logo",
+      "settings": [
+    
+   {
+      "type": "image_picker",
+      "id": "image",
+      "label":"Logo"
+}
+
+        
+      ]
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

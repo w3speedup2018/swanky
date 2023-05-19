@@ -1,0 +1,333 @@
+<div class="account-edit-box">
+  <div class="col-12 ap__card-header d-block d-md-flex">
+    <div class="ap__card-heading">
+      REFILL ITEMS LISTING
+      {% comment %}
+      <h6 class="next-refill-date ap__section-heading">
+        Next Refill
+        <span class="next_refill_date_add" data-id="6208942407872"></span>
+        <b><small class='refill_date'>Refill Date</small></b>
+      </h6>
+      <button class='tonight_refill' data-id=''>Refill tonight</button>
+      {% endcomment %}
+    </div>
+    <div class="ap__type-heading">
+      <label class="switch" data-tab-bar="Subscriptions">
+        <input type="radio" checked="checked" name="show_correct_tba" data-tech-mtch="edits">
+        <span class="span_type_main">Subscriptions</span>
+      </label>
+      <label class="switch" data-tab-bar="Add-Ons">
+        <input type="radio"  name="show_correct_tba" data-tech-mtch="addons">
+        <span class="span_type_main">Add-Ons</span>
+      </label>
+    </div>
+  </div>
+  <div>
+    <div class="main-type_edit_addons type_edit_addons card ap__card edit_sub" type="edits">
+      <div id="card-146097944" class="overviewSub_group no-bottomBorder">
+        <div class="w-100 account-edit-soap-sub">
+          {% for order in customer.orders %}
+          {% for line_item in order.line_items %}
+          {% if line_item.title contains 'Bars' or line_item.title contains 'bars' or line_item.title contains 'bar' or line_item.title contains 'Bar' %}
+          {% for property in line_item.properties %}
+          {% if property.first contains '_selling_plan' %}
+          <h4 class="ap_d_section-heading">
+            Next Refill: 
+            <span class="next_refill_date_add" data-id="{{ line_item.product_id }}">Month. Date</span>
+          </h4>
+          <div data-product="{{ line_item.product_id }}" 
+               data-subscription="{{ }}" 
+               data-type-order-number="{{ order.name }}" 
+               data-plan-date="{{ order.created_at | date: format: "month_day_year" }}" 
+               class="data_edit__style_line_date data_edit__style_line row ap__card-row align-items-center text-center" data-line-id="{{ line_item.id }}" data-line-title="{{ line_item.title }}" data-rem="0" data-sub-item-limit="{{ line_item.title | remove: ' bars'  | remove: ' Bars' }}" data-type-shop-for="{% if line_item.properties['Soap For'] %}{{ line_item.properties['Soap For']  | upcase }}{% else %}{{ 'A COUPLE' }}{% endif %}" data-type-selling-plan="{{ line_item.properties['_selling_plan'] | remove: 'Delivery ' | capitalize }}">
+            <!----> 
+            <div class="product-bars product_image-bg col_th col-md px-0">
+              <div class="product_image bg">
+                <img src="{{ line_item.image | img_url: 'large' }}" />
+              </div>
+            </div>
+            <div class="product-bars col_th col-md mb-md-0 text-left subscription-products-update-01">
+              <div class="product-bars-title-bg ap__card-heading" style="font-family: MetropolisBold;" data-title="{{ line_item.title }}">{{ line_item.title }}</div>
+              <div class="product-bars-plan ap__card-text ap__text-subdued" data-plan="{{ line_item.properties['_selling_plan'] | remove: 'Delivery ' | capitalize }}" data-selling-plan="line_item_properties_selling_plan">
+                <i class="fa fa-refresh" aria-hidden="true"></i> <span>{{ line_item.properties['_selling_plan'] | remove: 'Delivery ' | capitalize }}
+                </span>{%- for p in line_item.properties -%}
+                {%- if p.first contains '1' or p.first contains '2' or p.first contains '3' or p.first contains '4' or p.first contains '5'  or p.first contains '6' -%}
+                <p class="p_item_type hide hidden" hide hidden><b>{{- p.first -}}</b> : {{- p.last -}}</p>
+                {%- endif -%}
+                {%- endfor -%}
+              </div>
+              <!-- new one -->{% for product in collections['soaps'].products %}
+              {%- comment %}<locksmith:ae81>{% endcomment -%}
+                {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, subject_parent: collections.soaps, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+              {%- comment %}</locksmith:ae81>{% endcomment -%}
+              <div class="scent-DisplayItem"
+                   {% for p in line_item.properties %}
+                   {% if p.last contains product.title %}
+                   {% if p.first contains '1' or p.first contains '2' or p.first contains '3' or p.first contains '4' or p.first contains '5'  or p.first contains '6' %}
+                   data-item-value="{% if p.last contains ' X ' %}{{ p.last | split: ' X ' | last }}{% else %}{{ p.last | split: 'Qty -' | last }}{% endif %}"
+                   {% else %}
+                   data-item-value="{{ '0' }}"
+                   {% endif %}
+                   {% endif %}
+                   {% endfor %}
+                   >
+                <div class="current_product_description hide hidden" hide hidden data-match-attr="{{ product.featured_image | img_url : 'master' }}">{{ product.description }}</div>
+                <div class="current_product_description_001">
+                  {%- for p in line_item.properties -%}
+                  {% if p.last contains product.title %}
+                  <div class="scent-displayList_qtyToggle">
+                    <button style='display:none;' class="qtyButton decrease">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                    <input readonly="readonly" class="qtyScreen" min="0"
+                           {% if p.first contains '1' or p.first contains '2' or p.first contains '3' or p.first contains '4' or p.first contains '5'  or p.first contains '6' %}
+                           value="{% if p.last contains ' X ' %}{{ p.last | split: ' X ' | last }}{% else %}{{ p.last | split: 'Qty -' | last }}{% endif %} x"
+                           {% endif %}
+                           >
+                    <button style='display:none;' class="qtyButton increase locked">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  <p class="se_cutom_btn ap__card-text scentTitle" style="cursor: pointer;">{{ product.title }}</p>
+                </div>
+              </div>
+              {% endfor %}
+              <!-- new two -->
+            </div>
+            <div class="subscription_bars_edit_btns col_th col_th_tw col-md order-4 px-0 pr-md-0 pl-md-auto" style="margin-top: 8px;">
+              <div class="subscription_bars_edit">
+                <p><span class="line_item_compare_at_price">{{ line_item.compare_at_price | money }}</span>{{ line_item.price | money }}</p>
+              </div>
+              <div class="{% comment %}hide hidden {% endcomment %}d-none d-md-block">
+                <span class="skip_subscription_skip_edit">
+                  Skip
+                </span>
+              </div>
+            </div>
+            {% comment %}
+            <div class="subscription-products-update" style="display: none;">
+              {% include 'subscription-products-update-01' %}
+            </div>
+            {% endcomment %}
+            <div class="skip_subscription_skip_edit_popup" style="display: none;">
+              <form class="" method="post" action="#">
+                <span class="close_x_skip">x</span>
+                <div class="cancel_subscription_inner">
+                  Are you sure, you want to skip the <b><current-bar>{{ line_item.title }}/{{ line_item.properties['_selling_plan'] | remove: 'Delivery ' | capitalize }}</current-bar></b> subscription?
+                  <div class="text-center">
+                    <div class="text-center">
+                      <span class="btn btn-block btn-primary w-100 no_proceed_skip_cancel">NO</span>
+                    </div>
+                    <div class="text-center">
+                      <span class="btn btn-block btn-primary w-100 yes_proceed_skip_cancel">YES, CANCEL</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          		{% endif %}
+          {% endfor %}
+          	{% endif %}
+          {% endfor %}
+          {% endfor %}
+        </div>
+      </div>     
+    </div>
+    <div class="type_edit_addons card account-edit-one-times" type="addons" style="display: none;">
+      <div id="card-146097944" class="overviewSub_group no-bottomBorder">
+        <div class="w-100 account-edit-soap-sub">
+          <div class="card ap__card edit_sub">
+            <div class="overviewOnetimes_group">
+              <div class="row ap__card-row align-items-center text-center">
+                <div class="col-12 px-0">
+                  <p class="ap__card-text" style="font-family: MetropolisBold;">Nothing to see here!</p>
+                  <p class="ap__card-text">You don't have any add-ons scheduled for this refill. Add in some extra goods below!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).on('click','label.switch', function (){
+    var dataChildType = jQuery(this).find("input").attr("data-tech-mtch");
+    jQuery(".type_edit_addons").each(function(){
+      if(jQuery.trim(dataChildType) == jQuery.trim(jQuery(this).attr("type"))){
+        jQuery(this).addClass("active").show();
+      }else{
+        jQuery(this).removeClass("active").hide();   
+      }
+    });  
+  });
+  $(document).on('click','.subscription_bars_edit', function (){
+    jQuery(this).hide();
+    jQuery(this).closest(".data_edit__style_line").find(".subscription_bars_close").show();
+    jQuery(this).closest(".data_edit__style_line").find(".subscription-products-update").slideDown();
+  });
+  $(document).on('click','.subscription_bars_close', function (){
+    jQuery(this).hide();
+    jQuery(this).closest(".data_edit__style_line").find(".subscription_bars_edit").show();
+    jQuery(this).closest(".data_edit__style_line").find(".subscription-products-update").slideUp();
+  });
+  jQuery(document).on("change", ".edit_new_bar_value_bar", function(){
+    jQuery(".data_edit__style_line").attr("data-sub-item-limit", jQuery(this).find("option:selected").val());
+  });
+  jQuery(".data_edit__style_line").each(function(){
+    var dataLineTitle = jQuery(this).attr("data-line-title");
+    var dataTypeShopFor = jQuery(this).attr("data-type-shop-for");
+    //alert(dataTypeSellingPlan);
+    jQuery(this).find(".edit_new_bar_value_del option").each(function(){
+      var dataTypeDel = jQuery(this).attr("data-type-del");
+
+
+      // one person
+      if(jQuery.trim(dataTypeShopFor) == 'ONE PERSON'){
+        if(jQuery.trim(dataTypeDel) == 'Every 3 months'){
+          jQuery(this).prop("selected", true).attr("selected", "selected");
+        }else{
+          jQuery(this).remove();
+        }
+        // a couple
+      }else if(jQuery.trim(dataTypeShopFor) == 'A COUPLE'){
+        if(jQuery.trim(dataTypeDel) == 'Every 2 months' || jQuery.trim(dataTypeDel) == 'Every 3 months'){
+          if(jQuery.trim(dataTypeDel) == 'Every 2 months'){
+            jQuery(this).prop("selected", true).attr("selected", "selected");
+          }
+        }else{
+          jQuery(this).remove();
+        }
+        // a small family
+      }else if(jQuery.trim(dataTypeShopFor) == 'A SMALL FAMILY'){
+        if(jQuery.trim(dataTypeDel) == 'Every 1 month' || jQuery.trim(dataTypeDel) == 'Every 2 months'){
+          if(jQuery.trim(dataTypeDel) == 'Every 1 month'){
+            jQuery(this).prop("selected", true).attr("selected", "selected");
+          }
+        }else{
+          jQuery(this).remove();
+        }
+        // a large family
+      }else if(jQuery.trim(dataTypeDel) == 'A LARGE FAMILY'){
+        if(jQuery.trim(dataTypeDel) == 'Every 1 month'){
+          jQuery(this).prop("selected", true).attr("selected", "selected");
+        }else{
+          jQuery(this).remove();
+        }
+      }
+    });
+
+    jQuery(this).find(".edit_new_bar_value_bar option").each(function(){
+      var dataProdTag = jQuery(this).attr("data-prod-tag");
+      var dataNewSellingName = jQuery(this).attr("data-new-selling-name");
+
+
+      if(jQuery.trim(dataTypeShopFor) == jQuery.trim(dataProdTag)){
+        jQuery(this).show().addClass("active_for_current_bar_type");
+      }else{
+        jQuery(this).remove();
+      }
+
+
+
+      if(jQuery.trim(dataLineTitle) == jQuery.trim(dataNewSellingName)){
+        jQuery(this).attr("selected", "selected").prop("selected", true);
+      }else{
+        jQuery(this).removeAttr("selected").prop("selected", false);
+      }
+
+
+    });
+  });
+
+  jQuery(".scent-DisplayItem").each(function(){
+    if(jQuery(this).attr("data-item-value")){
+    }else{
+      jQuery(this).text();
+      jQuery(this).append('<div class="scent-displayList_qtyToggle"><button class="qtyButton decrease"> <i class="fa fa-minus"></i></button> <input readonly="readonly" class="qtyScreen" min="0" value="0"> <button class="qtyButton increase locked"> <i class="fa fa-plus"></i></button></div>')
+    }
+  });
+
+  // for chaging months based on the Number of Bars
+  jQuery(document).on("change", ".edit_new_bar_value_bar", function(){
+    var typeDataTypeShopFor = jQuery(this).closest(".data_edit__style_line").attr("data-type-shop-for");
+    if(jQuery.trim(typeDataTypeShopFor) == 'ONE PERSON'){
+      if(parseInt(jQuery(this).val()) == 4 || parseInt(jQuery(this).val()) == 6 || parseInt(jQuery(this).val()) == 8){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 3 months"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+    }
+    if(jQuery.trim(typeDataTypeShopFor) == 'A COUPLE'){
+      if(parseInt(jQuery(this).val()) == 10 || parseInt(jQuery(this).val()) == 12){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 3 months"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+      if(parseInt(jQuery(this).val()) == 14){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 2 months"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+    }
+    if(jQuery.trim(typeDataTypeShopFor) == 'A SMALL FAMILY'){
+      if(parseInt(jQuery(this).val()) == 10 || parseInt(jQuery(this).val()) == 12){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 2 months"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+      if(parseInt(jQuery(this).val()) == 8){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 1 month"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+    }
+    if(jQuery.trim(typeDataTypeShopFor) == 'A LARGE FAMILY'){
+      if(parseInt(jQuery(this).val()) == 8 || parseInt(jQuery(this).val()) == 10 || parseInt(jQuery(this).val()) == 12){
+        jQuery(".edit_new_bar_value_del").find("option").each(function(){
+          if(jQuery(this).attr("data-type-del") == "Every 2 months"){
+            jQuery(this).attr("selected", "selected").prop("selected", true);
+          }else{
+            jQuery(this).removeAttr("selected").prop("selected", false);
+          }
+        });
+      }
+    }
+  });
+  // for chaging months based on the Number of Bars
+  jQuery(document).on("change", ".edit_new_bar_value_del", function(){
+    var typeDataTypeDel = jQuery(this).attr("data-type-del");
+
+    if(jQuery.trim(typeDataTypeDel) == ""){
+    }
+    if(jQuery.trim(typeDataTypeDel) == ""){
+    }
+    if(jQuery.trim(typeDataTypeDel) == ""){
+    }
+  });
+</script>

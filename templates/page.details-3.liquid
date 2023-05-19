@@ -1,0 +1,63 @@
+{% comment %}
+  The contents of the page.details-3.liquid template can be found in /sections/page-details-3-template.liquid
+{% endcomment %}
+
+<!-- Stylesheets for Turbo -->
+{{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .container.main.content {
+    width: 100% !important;
+    padding: 0 !important;
+    max-width: none;
+  }
+  .container.main.content #pagecontent {
+    padding: 0 !important;
+  }
+  .mega-menu__richtext a, .mega-menu__richtext a:active, .mega-menu__richtext a:hover {
+    padding: 12px 0 !important;
+  }
+  @media only screen and (max-width: 480px) {
+    .caption-content .action_button {
+      width: 54vw;
+    }
+    .container .featured-link--half {
+      width: 100%;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1 0 100%;
+      -ms-flex: 1 0 100%;
+      flex: 1 0 100%;
+    }
+    .equal-columns--outside-trim .medium-down--one-half {
+      width: calc(50% - (20px - (20px / 2))) !important;
+    }
+    .homepage_content.section.center.clearfix {
+      margin: auto;
+    }
+    .block__rich_text_and_image .container {
+      width: calc(100% - 40px);
+    }
+  }
+</style>
+
+{% section 'page-details-3-template' %}
+
+<script>
+  window.onload = function() {
+    const header = document.querySelector('[data-header-feature-image="true"]');
+    if (header) {
+      header.classList.add('feature_image');
+    }
+
+    const headerContent = document.querySelector('[data-header-is-absolute="true"]');
+    if (header) {
+      headerContent.classList.add('is-absolute');
+    }
+    $('.nav-desktop__tier-1-item--widemenu-parent').on("mouseover", function(){
+      header.classList.remove('feature_image');
+    });
+    $('.nav-desktop__tier-1-item--widemenu-parent').on("mouseout", function(){
+      header.classList.add('feature_image');
+    });
+  };
+</script>

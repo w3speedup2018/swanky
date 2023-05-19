@@ -1,0 +1,34 @@
+<div class="vertical-menu">
+  {% for link in linklists[linklist].links %}
+    {%- comment %}<locksmith:cfb5>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: linklists[linklist], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:cfb5>{% endcomment -%}
+    {% if linklists[link.handle] == empty %}
+      <li><a href="{{ link.url }}" class="top_link {% if link.url == '#' %}url-deadlink{% endif %} {% if link.active %}active{% endif %}" data-dropdown-rel="{{ link.handle }}">{{ link.title }}</a></li>
+    {% else %}
+      <li class="sublink"><a data-no-instant href="{{ link.url }}" class="dropdown_link--vertical {% if link.url == '#' %}url-deadlink{% endif %} {% if link.active %}active{% endif %}" data-dropdown-rel="{{ link.handle }}">{{ link.title }} <span class="icon-down-arrow"></span></a>
+        <ul class="vertical-menu_submenu">
+          {% for link in linklists[link.handle].links %}
+            {%- comment %}<locksmith:3e2b>{% endcomment -%}
+              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: linklists[link.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+            {%- comment %}</locksmith:3e2b>{% endcomment -%}
+            {% if linklists[link.handle] == empty %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% else %}
+            <li class="sublink"><a data-no-instant href="{{ link.url }}" class="{% if link.url == '#' %}url-deadlink{% endif %}">{{ link.title }} <span class="right icon-down-arrow"></span></a>
+              <ul class="vertical-menu_sub-submenu">
+                {% for link in linklists[link.handle].links %}
+                  {%- comment %}<locksmith:ae36>{% endcomment -%}
+                    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: linklists[link.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                  {%- comment %}</locksmith:ae36>{% endcomment -%}
+                  <li><a href="{{ link.url }}" class="{% if link.url == '#' %}url-deadlink{% endif %}" >{{ link.title }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </li>
+    {% endif %}
+  {% endfor %}
+</div>

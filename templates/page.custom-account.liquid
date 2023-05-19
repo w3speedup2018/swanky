@@ -1,0 +1,378 @@
+<div class="se-one-whole">
+  <input type='hidden' class='customer_email' value='{{ customer.email }}'/>
+  <div class="se-inner-whole">
+    <div class="grid__item se-inner-left">
+      <div class="main_content_container">
+        <div class="avatar_container">
+          <div class="avatar_container_avatar">
+            <img class="avatar_assets" src="https://cdn.shopify.com/s/files/1/1283/2241/t/61/assets/download.png" />
+            <h4>{{- customer.first_name -}}</h4>
+          </div>
+        </div>
+        <ul>
+          <li class="main__li navigate-account" data-tab="Overview" style="display:none;">
+            <a href=""><i class="fa fa-angle-down"></i>Navigate Account</a>
+          </li>
+          <!--<li class="main__li Overview_container active" data-tab="Overview">
+            <a href=""><i class="fa fa-home"></i> Overview</a>
+          </li> -->
+          <li class="main__li Start_a_Subcription_container" data-tab="Start a Subcription">
+            <a href="https://swankybadger.com/pages/subscription-page"><i class="fa fa-recycle"></i>Start a Subcription</a>
+          </li>
+          <li class="main__li My_Orders_container" data-tab="My Orders">
+            <a href=""><i class="fa fa-cube"></i>My Orders</a>
+          </li>
+          <li class="main__li Swanky_Box_container" data-tab="Swanky Box">
+            <a href=""><i class="fa fa-refresh" aria-hidden="true"></i>Manage Subscription<i class="fa fa-chevron-down"></i></a>
+            <ul class="nav child_menu" style="display: none;">
+              <li class="s_b_tmp active" data-child-type="Edit Box"><span>Edit Subscription</span></li>
+              <li class="s_b_tmp" data-child-type="Refill Schedule"><span>Refill Schedule</span></li>
+            </ul>
+          </li>
+          <li class="main__li Billing_and_Shipping_container" data-tab="Billing & Shipping">
+            <a href=""><i class="fa fa-credit-card"></i>Shipping Addresses</a>
+          </li>
+          <li class="main__li Account_Settings_container active" data-tab="Account Settings">
+            <a href=""><i class="fa fa-user"></i>Account Settings</a>
+          </li>
+          <!-- <li class="Referral_Rewards_container" data-tab="Referral Rewards">
+              <a href=""><i class="fa fa-gift" aria-hidden="true"></i>Referral Rewards</a>
+              </li> -->
+          <li class="main__li Logout_container" data-tab="Logout">
+            <a href="/account/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="grid__item se-inner-right">
+      <div class="grid__item se-sub-inner">
+        <div class="tagret_content Overview_container" data-tab="Overview" style="display: none;">
+          {% include 'account_overview' %}
+        </div>
+        <div class="tagret_content Start_a_Subcription_container" data-tab="Start a Subcription" style="display: none;">
+          {% include 'account_subscription' %}          
+        </div>
+        <div class="tagret_content My_Orders_container" data-tab="My Orders" style="display: none;">
+          {% include 'account_orders' %} 
+        </div>
+        <div class="tagret_content Bildivng_and_Shipping_container" data-tab="Billing & Shipping" style="display: none;">
+          {% include 'account_billing_shipping' %} 
+        </div>
+        <div class="tagret_content Account_Settings_container active" data-tab="Account Settings">
+          {% include 'account_settings' %}
+        </div>
+        <div class="tagret_content Referral_Rewards_container" data-tab="Referral Rewards" style="display: none;">
+          {% include 'account_referral' %}
+        </div>
+        <div class="tagret_content Swanky_Box" data-tab="Swanky Box" style="display: none;">
+          {% include 'Swanky_Box' %}
+        </div>
+      </div>
+    </div>    
+  </div>  
+</div>
+
+
+<script type="text/javascript">
+  jQuery(document).on("click", ".se-inner-left ul li.main__li", function(e){
+//     if(jQuery(this).attr("data-tab") != 'Logout' || jQuery(this).attr("data-tab") != 'Start a Subcription'){  
+    if(jQuery(this).attr("data-tab") != 'Logout' || jQuery(this).attr("data-tab") != 'Start a Subcription'){
+      e.preventDefault();
+      jQuery(".se-inner-left ul li.main__li").removeClass("active");
+      jQuery(this).addClass("active");
+      var dataTab = jQuery(this).attr("data-tab");
+      jQuery(".tagret_content").each(function(){
+        if(jQuery.trim(dataTab) == jQuery.trim(jQuery(this).attr("data-tab"))){
+          jQuery(this).addClass("active").show();
+        }else{
+          jQuery(this).removeClass("active").hide();   
+        }
+      });
+    }
+   else{
+      jQuery(this).addClass("active");      
+    }
+  });
+  $(document).on('click', '.edit-address',function (){
+    $('.Billing_and_Shipping_container').click();
+    $('h4.address_title').each(function (){
+      var temp=$(this).text().trim().split(' ');
+      if(temp[temp.length-1]=="(Default)")
+      {
+        $(this).parent().find('span.action_edit a').click();
+      }
+    });
+  });
+</script>
+
+{% comment %}
+{% paginate customer.orders by 20 %}
+<a name="pagecontent" id="pagecontent"></a>
+
+<header class="account-header clearfix">
+  <div class="eight columns account-header-title">
+    <h1>{{ 'customer.account.details' | t }}</h1>
+  </div>
+  <div class="eight columns account-header-logout">
+    <span>{{ 'layout.customer.log_out' | t | customer_logout_link }}</span>
+  </div>
+</header>
+<div class="feature_divider"></div>
+
+<div class="section clearfix">
+  <aside class="five columns account-sidebar">
+    <h4 class="name"><a href="/account" title="{{ 'layout.customer.my_account' | t }}">{{ customer.name }}</a>
+      <!-- Begin ReCharge code -->
+      <p id="rc_link_container">
+        <a href="/tools/recurring/login">Manage Subscriptions</a>
+      </p>
+      <!-- End ReCharge code -->
+    </h4>
+    <p class="email note">{{ customer.email }}</p>
+    <h4>{{ 'customer.addresses.primary' | t }}</h4>
+    <div class="address note">
+      {% if customer.default_address != nil %}
+      <p>{{ customer.default_address.address1 }}</p>
+      {% if customer.default_address.address2 != "" %}
+      <p>{{ customer.default_address.address2 }}</p>
+      {% endif %}
+      <p>{{ customer.default_address.city}}{% if customer.default_address.province_code %}, {{customer.default_address.province_code}}{% endif %} {{ customer.default_address.zip}}</p>
+      <p>{{customer.default_address.country}}</p>
+      <p>{{ customer.default_address.phone }}</p>
+      {% else %}
+      <p>{{ 'customer.addresses.no_addresses' | t }}</p>
+      {% endif %}
+      <p><a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+    </div>
+  </aside>
+  <main class="eleven columns account-main">
+    <div id="customer_orders">
+      <h4>{{ 'customer.orders.title' | t }}</h4>
+
+      {% if customer.orders.size != 0 %}
+      <table width="100%">
+        <thead>
+          <tr>
+            <th>{{ 'customer.orders.order_number' | t }}</th>
+            <th>{{ 'customer.orders.date' | t }}</th>
+            <th>{{ 'customer.orders.payment_status' | t }}</th>
+            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+            <th>{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in customer.orders %}
+          <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+            <td>{{ order.name | link_to: order.customer_url }}</td>
+            <td>{{ order.created_at | date: format: "month_day_year" }}</td>
+            <td>{{ order.financial_status_label }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+            <td>
+              <span class="money">{{ order.total_price | money }}</span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>{{ 'customer.orders.none' | t }}</p>
+      {% endif %}
+
+      {% include 'pagination' with true %}
+    </div>
+  </main>
+</div>
+{% endpaginate %}
+{% endcomment %}
+
+<script>
+  
+  var subscription_url = '/a/subscriptions';
+  
+  var email = $(".customer_email").val();
+  var data = {
+    "action":"get_customer_details",
+    "email":email
+  };
+  var subscription_request = $.post(subscription_url,data);
+  subscription_request.done(function(res){
+  var result = JSON.parse(res);
+
+    var customer_details = result['customer_details'];
+    console.log('customer_details : ',customer_details);
+     for (var key in customer_details) {
+       var product_id = key;
+
+       var subscription_id = customer_details[key]['subscription_id'];
+       var status = customer_details[key]['status'];
+       if(status == 'ACTIVE'){
+       var next_subscription = customer_details[key]['next_order_date'].split("T");
+           $(".next_refill_date_add[data-id='"+product_id+"']").text(next_subscription[0]);
+       
+          $(".data_edit__style_line_date[data-product='"+product_id+"'] .cancel_subscription").show();
+         $(".data_edit__style_line_date[data-product='"+product_id+"'] .resume_subscription").hide();
+       }
+       else{
+       next_subscription = '';
+           $(".next_refill_date_add[data-id='"+product_id+"']").hide();
+        
+$(".data_edit__style_line_date[data-product='"+product_id+"'] .skip_subscription_skip_edit").hide();
+       $(".data_edit__style_line_date[data-product='"+product_id+"'] .cancel_subscription").hide();
+         $(".data_edit__style_line_date[data-product='"+product_id+"'] .resume_subscription").show();
+       
+         $(".data_edit__style_line_date[data-product='"+product_id+"'] .SW_refill_tonight").hide();
+       }
+     
+   $(".data_edit__style_line_date[data-product='"+product_id+"']").attr("data-subscription",subscription_id);
+}  
+      
+    
+    
+    
+    
+    
+//     if(status == 'success'){
+//      var next_date  = result['next_subscription_date'].split("T");
+//       $(".next-refill-date .refill_date").text(next_date[0]);
+//       var subscription_id = result['subscription_id'];
+//       $(".tonight_refill").attr("data-id",subscription_id);
+   
+//     }
+  });
+
+  $(document).on("click",".yes_proceed_refill",function(e){
+    e.preventDefault();
+   // if(confirm("are you sure want to change date?")){
+      var data_id = $(this).closest(".data_edit__style_line_date").attr("data-subscription");
+      var data_product = $(this).closest(".data_edit__style_line_date").attr("data-product");
+      var d = new Date();
+
+      var month = d.getMonth()+1;
+      var day = d.getDate();
+
+      var today_date = d.getFullYear() + '-' +
+          (month<10 ? '0' : '') + month + '-' +
+          (day<10 ? '0' : '') + day;
+
+      var data = {
+        "action":"update_next_order_date",
+        "subscription_id":data_id,
+        "date_updated":today_date
+      };
+
+      var send_request = $.post(subscription_url,data);
+      send_request.done(function(res){
+        console.log(res);
+        var result = JSON.parse(res);
+        if(result['status'] == 'success'){
+$(".next_refill_date_add[data-id='"+data_product+"']").text(today_date);
+       $(".refill_subscription_popup").removeClass("active");
+
+        }
+
+
+      });
+
+
+   // }
+  });
+  
+  
+  $(document).on("click",".yes_proceed_cancel,.yes_proceed_skip_cancel",function(){
+  
+    var rct_form__radio = $(".rct_form__radio:checked").val();
+    if(rct_form__radio == undefined){
+      		$("#retention-strategy-1601760").prop("checked",true);
+    }
+    
+    var reason_value = $(".rct_form__radio:checked").closest(".rct_form__group--radio").find("label").text();
+     var data_id = $(this).closest(".data_edit__style_line_date").attr("data-subscription");
+     var data = {
+        "action":"cancel_subscription",
+        "subscription_id":data_id,
+        "reason":reason_value
+      };
+        var send_request = $.post(subscription_url,data);
+      send_request.done(function(res){
+        console.log(res);
+        var result = JSON.parse(res);
+        if(result['status'] == 'success'){
+	window.location.reload();
+          // $(".next_refill_date_add[data-id='"+data_product+"']").text(today_date);
+//        $(".refill_subscription_popup").removeClass("active");
+
+        }
+  });
+  });
+  
+  $(document).on("click",".resume_subscription",function(){
+  var data_id = $(this).closest(".data_edit__style_line_date").attr("data-subscription");
+     var data = {
+        "action":"resume_subscription",
+        "subscription_id":data_id
+      };
+        var send_request = $.post(subscription_url,data);
+      send_request.done(function(res){
+        console.log(res);
+        var result = JSON.parse(res);
+        if(result['status'] == 'success'){
+			window.location.reload();
+          // $(".next_refill_date_add[data-id='"+data_product+"']").text(today_date);
+//        $(".refill_subscription_popup").removeClass("active");
+
+        }
+  });
+  
+  });
+  
+  
+  $(document).on('click','.Start_a_Subcription_container', function (){
+    window.location.replace($(this).children().attr('href'));
+  });
+  $(document).on('click',".navigate-account", function(){
+    $(this).siblings().slideToggle("fast");
+  });
+  $(document).ready(function(){
+    if(window.matchMedia("(max-width: 799px)").matches){
+      $(".navigate-account").addClass('active');
+      $(".navigate-account").siblings().addClass('navigate-account-toggle');
+    }
+  });
+
+  $(window).on('resize', function(){
+    var width = $(document).width();
+    var h = $(document).height();
+    $('.width').html(width);
+    $('.height').html(h);
+
+    if (width <= 799){
+      $(".navigate-account").siblings().addClass('navigate-account-toggle');
+      $(".navigate-account").addClass('active');
+    }
+    else{
+      $(".navigate-account").toggleClass('active');
+      $(".navigate-account").siblings().removeClass('navigate-account-toggle');
+    }
+  });
+  $(document).on('click','.s_b_tmp', function (){
+    jQuery(".s_b_tmp").removeClass("active");
+    jQuery(this).addClass("active");
+  });
+  $(document).on('click','.s_b_tmp', function (){
+    var dataChildType = jQuery(this).attr("data-child-type");
+    jQuery(".data-child-type").each(function(){
+      if(jQuery.trim(dataChildType) == jQuery.trim(jQuery(this).attr("data-child-type"))){
+        jQuery(this).addClass("active").show();
+      }else{
+        jQuery(this).removeClass("active").hide();   
+      }
+    });  
+  });
+  
+  
+  
+// $('.mobile-fixed-toggle .subscription_bars_edit').click(function (){
+//     $(this).closest('.data_edit__style_line_date').siblings().find('.save-btn-to-edit').parent().addClass('hide hidden');
+// $(this).closest('.data_edit__style_line_date').siblings().find('.subscription_bars_close i').click();
+// });
+</script>

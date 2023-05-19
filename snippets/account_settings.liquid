@@ -1,0 +1,62 @@
+<div><h1 class="account_pageTitle">Account Settings</h1> 
+  <div class="col-12 px-0">
+    <div class="ap__card-header">
+      <h4 class="ap__card-heading">Profile</h4>
+      <a class="ap__card-link edit-address d-none d-md-flex">Edit</a>
+    </div>
+    <div class="card ap__card">
+      <div class="grid text-center">
+        <div class="grid__item one-third medium-down--one-whole">
+          <div class="justify-content-center">
+            <h4 class="ap__section-heading">Name</h4></div> 
+          <p class="ap__card-text mt_auto">{{- customer.name -}}</p>
+        </div>
+        <div class="grid__item one-third medium-down--one-whole">
+          <div class="justify-content-center">
+            <h4 class="ap__section-heading">Email</h4></div>
+          <p class="ap__card-text mt-auto">{{- customer.email -}}</p>
+        </div> 
+        <div class="grid__item one-third medium-down--one-whole">
+          <div class="justify-content-center">
+            <h4 class="ap__section-heading">Password</h4></div>
+          <p class="ap__card-text mt-auto"><a href="/account/login#recover" class="ap__card-link">Reset</a></p></div>
+      </div>
+      <!--       <div class="ap__card-row mobile-btn d-md-none"><a href="#" class="ap__card-link">
+                  Edit
+                  <i class="fa fa-angle-right"></i></a></div> -->
+    </div>
+  </div> 
+  <div class="col-12 px-0">
+    <div class="ap__card-header"><h4 class="ap__card-heading">Details</h4></div> 
+    <div class="card ap__card">
+      <div class="grid text-center">
+      <div class="container-fluid"><div class="grid row">
+        <div class="grid__item one-third medium-down--one-whole">
+        <div class="justify-content-center"><h4 class="ap__section-heading">Last Order</h4></div> 
+        <p class="ap__card-text mt-auto">
+          {% for order in customer.orders %}
+          {% if forloop.first == true %}
+          {{ order.name | link_to: order.customer_url }}
+          {% endif %}
+          {% endfor %}
+          </p></div>
+        <div class="grid__item one-third medium-down--one-whole">
+        <div class="justify-content-center"><h4 class="ap__section-heading">Total Orders</h4></div> 
+        <p class="mt-auto">{{- customer.orders.size -}}</p></div>
+        <div class="grid__item one-third medium-down--one-whole">
+        <div class="justify-content-center"><h4 class="ap__section-heading">Order/Payment Status</h4></div>
+        <p class="ap__card-text text-secondary mt-auto">
+          {% for order in customer.orders %}
+          {% if forloop.first == true %}
+          {{ order.financial_status_label }}/{{ order.fulfillment_status_label }}
+          {% endif %}
+          {% endfor %}</p>
+        </div></div>
+        </div>
+      </div>
+    </div>
+  </div> 
+<!--   <div class="ap__card-header d-block"><h4 class="ap__card-heading">Account Cache</h4>
+    <p class="ap__card-text">Something seem off? Try clearing session cache to re-sync your account information from our servers.</p>
+    <a class="ap__card-link">Clear</a></div> -->
+</div>

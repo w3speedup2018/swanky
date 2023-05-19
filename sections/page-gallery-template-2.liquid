@@ -1,0 +1,97 @@
+<div class="subcription_all_section">
+  <div class="comman_pages_subscribe one_step_subscription">
+    <div class="subscription_step_one"> 
+      <div class="container">
+        <h2>{{ section.settings.title }}</h2>
+        
+        <div class="loop_box_cmn">
+          <div class="loop_box">
+            {% for block in section.blocks %}
+              <div class="single_select loop">
+                <a href="{{ block.settings.product_url }}" class="data data--gray">
+                  <div class="left_data">
+                    {% if block.settings.small != blank %}
+                      <h5>{{ block.settings.small }}</h5>
+                    {% endif %}
+                    
+                    <span class="points_txt"> {{ block.settings.extra }}</span>
+                  </div>
+                  
+                  {% if block.settings.image != blank %}
+                    <div class="image"><img class="show" src="{{ block.settings.image| img_url:'master' }}">
+                      <img style="display:none;" class="hover" src="{{ block.settings.hoverimage | img_url:'master' }}">
+                    </div>
+                  {% endif %}
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<style>
+.subcription_all_section .loop .data.data--gray {
+  background: #ededed;
+  border-radius: 0;
+  border: none;
+}
+.subcription_all_section {
+  background: none;
+  display: block;
+}
+.comman_pages_subscribe h2 {
+  margin: 24px 0;
+}
+</style>
+{% schema %}
+  {
+    "name": "Subscription Step One 1",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label":"Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "box",
+        "name": "box",
+        "settings": [
+          {
+            "type": "text",
+            "id": "small",
+            "label":"Text"
+          },
+          {
+            "type": "text",
+            "id": "extra",
+            "label":"Extra Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label":"Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "hoverimage",
+            "label":"Hover Image"
+          },
+          {
+            "type": "url",
+            "id": "product_url",
+            "label":"Product page"
+          }    
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,14 @@
+{% if request.page_type == "page" and page.metafields.replo.page_featured_image != blank %}
+  {%- comment %}<locksmith:f344>{% endcomment -%}
+    {%- capture var %}{% render 'locksmith-variables', variable: 'transparent', hiding_scope: 'resource' %}{% endcapture %}{% if var == 'true' %}<meta property="og:image" content="{{ page.metafields.replo.page_featured_image }}"/>{% endif -%}
+    {%- comment %}original: <meta property="og:image" content="{{ page.metafields.replo.page_featured_image }}"/>{%- endcomment %}
+  {%- comment %}</locksmith:f344>{% endcomment -%}
+  {%- comment %}<locksmith:fcb9>{% endcomment -%}
+    {%- capture var %}{% render 'locksmith-variables', variable: 'transparent', hiding_scope: 'resource' %}{% endcapture %}{% if var == 'true' %}<meta property="og:image:secure_url" content="{{ page.metafields.replo.page_featured_image }}"/>{% endif -%}
+    {%- comment %}original: <meta property="og:image:secure_url" content="{{ page.metafields.replo.page_featured_image }}"/>{%- endcomment %}
+  {%- comment %}</locksmith:fcb9>{% endcomment -%}
+  <meta property="twitter:image" content="{{ page.metafields.replo.page_featured_image }}"/>
+{% endif %}
+{% if request.page_type == "page" and page.metafields.replo.before_head_end_content != blank %}
+  {{ page.metafields.replo.before_head_end_content }}
+{% endif %}

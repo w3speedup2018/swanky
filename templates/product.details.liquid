@@ -1,0 +1,35 @@
+{% include 'product-content.zipifypages', contentprt: 'header' -%}
+{% comment %}
+  The contents of the product.details.liquid template can be found in /sections/product-details-template.liquid
+{% endcomment %}
+
+{% section 'product-details-template' %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+<script type="application/ld+json">
+  {
+         "@context": "http://schema.org/",
+         "@type": "Product",
+    	   "url": "{{shop.secure_url | escape}}{{ product.url | escape }}",
+    	   "name": "{{ product.title | escape }}",
+         "image": "https:{{ product.featured_image.src | img_url: 'master' }}",
+         "description": "{{ product.description | escape }}",
+         "brand": {
+             "name": "{{ product.vendor }}"
+         },
+         "sku": "{{ product.variants.first.sku }}",
+         "mpn": "{{ product.variants.first.sku }}",
+         "offers": {
+             "@type": "Offer",
+             "priceCurrency": "{{ shop.currency }}",
+             "price": "{{ current_variant.price | money_without_currency }}",
+             "availability": "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+             "seller": {
+                 "@type": "Organization",
+                  "name": "{{ shop.name }}"
+             },
+             "url": "{{shop.secure_url | escape}}{{ product.url | escape }}"
+         }
+  }
+</script>
+
+{% include 'product-content.zipifypages', contentprt: 'footer' %}

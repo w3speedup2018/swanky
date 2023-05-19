@@ -1,0 +1,33 @@
+<div class="select clearfix" {% if hide_default_title %} style="display:none" {% endif %} >
+  
+  
+  <span style="font-size: 20px;">{{ variant.price | money_with_currency }}</span>
+  
+<!-- {% for variant in product.variants %}
+	{% if variant.available == true %} -->
+  
+ 
+  
+<!--   <input id="swatch-{{ variant.id }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% unless variant.available %}disabled{% endunless %} />
+  <label for="swatch-{{ variant.id }}-{{ value | handle }}"  >
+  {{ variant.title }}
+  </label> -->
+	
+  
+  
+<!--   <option value="{{variant.id}}"> {{ variant.title }} for {{ variant.price | money_with_currency }}</option>-->
+	 
+<!-- 	{% endif %}
+{% endfor %} -->
+
+
+</div>
+  
+  <style>
+    .current_price.recharge-inner-most-price{
+    display:none !important;}
+    
+    .purchase-details__buttons.purchase-details__spb--true 
+    .shopify-payment-button .shopify-payment-button__button 
+    .shopify-payment-button__button--unbranded  { }
+  </style>

@@ -1,0 +1,6 @@
+{% for link in linklists[menu].links %}
+  {%- comment %}<locksmith:0f74>{% endcomment -%}
+    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: linklists[menu], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+  {%- comment %}</locksmith:0f74>{% endcomment -%}
+  <li><a href="{% if linklists[link.handle] != empty %}javascript:void(0);{% else %}{{ link.url }}{% endif %}" class="{% if link.active %}active{% endif %} {% if linklists[link.handle] != empty %}ps_dropdown_link dropdown_link{% else %} top_link {% endif %}" data-dropdown-rel="{{ link.handle }}">{{ link.title }} {% if linklists[link.handle] != empty %}<span class="icon-down-arrow"></span>{% endif %}</a></li>
+{% endfor %}

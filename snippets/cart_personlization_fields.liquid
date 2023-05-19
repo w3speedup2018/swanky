@@ -1,0 +1,430 @@
+
+<!-- Begin ReCharge code -->
+{% render 'subscription-cart-item' with item as item %}
+<!-- End ReCharge code -->
+{% assign property_size = item.properties | size %}
+{% if property_index_first == 'yes' %}
+<!--  personlization fields start-->
+{% if item.product.title contains 'Badger Credit Card Bottle Opener - No Personalization' %}  
+
+{% else %}
+
+{% assign temp_var_title = item.variant.title | handle %}
+
+<div class="custmiz_txt" id="myform_{{ item_num }}">
+  <div class="line-item-property__field">
+
+    <div style="clear:both;"></div>
+    <div class="text_area_parent">
+      {% assign t_leather_wallet_spain = 0 %}
+      {% assign t_glass_flask = 0 %}
+      {% assign t_pocket_watches = 0 %}
+      {% assign t_hip_flask = 0 %}
+      {% assign t_phone_cases = 0 %}
+      {% assign t_leather_wallet = 0 %}
+      {% assign t_leather_journal = 0 %}
+      {% assign t_cigar_boxes = 0 %}
+      {% assign t_classical_watches = 0 %}
+      {% assign t_wooden_watches = 0 %}
+      {% assign t_decanter = 0 %}
+      {% assign t_glasses = 0 %}
+      {% assign t_valentine = 0 %}
+
+      {% for tag in item.product.tags %}
+
+      {% if tag contains 't_decanter' %}
+      {% assign t_decanter = 1 %}
+      {% elsif tag contains 't_cigar_boxes' %}
+      {% assign t_cigar_boxes = 1 %}
+      {% elsif tag contains 't_leather_wallet' %}
+      {% assign t_leather_wallet = 1 %} 
+      {% elsif tag contains 't_valentine' %}
+      {% assign t_valentine = 1 %}
+      {% elsif tag contains 't_glasses' %}
+      {% assign t_glasses = 1 %}
+      {% elsif tag contains 't_phone_cases' %}
+      {% assign t_phone_cases = 1 %}
+      {% elsif tag contains 't_hip_flask' %}
+      {% assign t_hip_flask = 1 %}
+      {% elsif tag contains 't_classical_watches' %}
+      {% assign t_classical_watches = 1 %}
+      {% elsif tag contains 't_wooden_watches' %}
+      {% assign t_wooden_watches = 1 %}
+      {% elsif tag contains 't_pocket_watches' %}
+      {% assign t_pocket_watches = 1 %}                                              
+      {% elsif tag contains 't_glass_flask' %}
+      {% assign t_glass_flask = 1 %}
+      {% elsif tag contains 't_leather_wallet_spain' %}
+      {% assign t_leather_wallet = 0 %}
+      {% assign t_leather_wallet_spain = 1 %}
+      {% elsif tag contains 't_leather_journal' %}
+      {% assign t_leather_journal = 1 %}
+      {% endif %}
+      {% endfor %}
+
+      {% assign field_item = 0 %}
+
+      {% if t_wooden_watches == 1 %} 
+      {% for option in item.product.options %}
+      {% if option  == 'Personalization' %}
+      {% if item.variant.options[forloop.index0] == 'Yes' %}
+      {% assign field_item  = field_item | plus: 1 %}
+      {% if item.product.title contains 'Birthday' %}
+      <div class="field_item ss-item-required"> 
+        <label>Name (12 Characters max.)</label>
+        <input maxlength="12" class="required blank_check" id="fieldno_{{ field_item }}" type="text" key-data="Name (12 Characters max.)" name="properties[Name (12 Characters max.)]" placeholder="Example: Johnson">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required"> 
+        <label>Initials in middle (4 Characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="fieldno_{{ field_item }}" type="text" key-data="Initials in middle (4 Characters max.)" name="properties[Initials in middle (4 Characters max.)]" placeholder="Example: JB" data-pid="{{item.id}}" data-qty="{{item.quantity}}">
+      </div>
+      {% endif %}
+
+      {% unless item.product.title contains 'Initials' or item.product.title contains 'Anniversary' or item.product.title contains 'Message' or item.product.title contains 'Valentine' or item.product.title contains 'Father' %}
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item">
+        <label>Date - optional (12 characters max.)</label>
+        <input maxlength="12" id="fieldno_{{ field_item }}" type="text" key-data="Date - optional (12 characters max.)" name="properties[Date - optional (12 characters max.)]" placeholder="Example: 2018" class="optional">
+      </div>
+      {% endunless %}
+
+      {% if item.product.title contains 'Anniversary' or item.product.title contains 'Message' %}
+
+      {% if item.product.title contains 'Ebony Links' or product.title contains 'Sandalwood Links' or item.product.title contains 'Sandalwood Black' or item.product.title contains 'Sandalwood Modern' %}
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item ss-item-required">
+        <label>Surround Message (80 characters max.)</label>
+        <textarea maxlength="80" class="required blank_check" id="fieldno_{{ field_item }}" key-data="Surround Message (80 characters max.)" name="properties[Surround Message (80 characters max.)]" placeholder="Example: I love you for all that you are, all that you have been, all that you're yet to be"></textarea> 
+      </div>
+      {% else %}
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item ss-item-required">
+        <label>Surround Message (120 characters max.)</label>
+        <textarea maxlength="120" class="required blank_check" id="fieldno_{{ field_item }}" key-data="Surround Message (120 characters max.)" name="properties[Surround Message (120 characters max.)]" placeholder="Example: I love you for all that you are, all that you have been, all that you're yet to be"></textarea> 
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% if item.product.title contains 'Valentine' or item.product.title contains 'Father' %}
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item ss-item-required">
+        <label>Message on Top (25 characters max.)</label>
+        <input maxlength="25" id="fieldno_{{ field_item }}" type="text" key-data="Message on Top (25 characters max.)" name="properties[Message on Top (25 characters max.)]" placeholder="{% if item.product.title contains 'Valentine' %}To my forever valentine{% else %}Happy Father's Day{% endif %}" class="required">
+      </div>
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item ss-item-required">
+        <label>Message on Bottom (25 characters max.)</label>
+        <input maxlength="25" id="fieldno_{{ field_item }}" type="text" key-data="Message on Bottom (25 characters max.)" name="properties[Message on Bottom (25 characters max.)]" placeholder="With love 2-14-17" class="required">
+      </div>
+      {% endif %}
+
+      {% if item.product.title contains 'Groomsmen' %}
+      {% assign field_item  = field_item | plus: 1 %}
+      <div class="field_item">
+        <label>Wedding Role - optional (20 characters max.)</label>
+        <input maxlength="20" id="fieldno_{{ field_item }}" type="text" key-data="Wedding Role - optional (20 characters max.)" name="properties[Wedding Role - optional (20 characters max.)]" placeholder="Please enter wedding role if required." class="optional">
+      </div>
+      {% endif %}
+      
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+
+      {% elsif t_decanter == 1 %}
+      {% if item.product.title contains 'Draper' or item.product.title contains 'Heirloom' %}
+      <div class="field_item ss-item-required">
+        <label>Initial on Front (3 characters max.)</label>
+        <input maxlength="3" class="required blank_check" id="initial-on-front-3-characters-max" type="text" key-data="Initial on Front (3 characters max.)" name="properties[Initial on Front (3 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label for="name-on-front-{% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}15{% else %}12{% endif %}-characters-max">Name on Front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}maxlength="15"{% else %}maxlength="12"{% endif %} class="required blank_check" id="name-on-front-{% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}15{% else %}12{% endif %}-characters-max" type="text" key-data="Name on Front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}" name="properties[Name on Front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}]" placeholder="Example: HENDERSON">
+      </div>
+      {% endif %}
+
+      {% unless item.product.title contains 'Draper' or item.product.title contains 'Diamond' %}
+      <div class="field_item">
+        <label>Year or Date - optional (10 characters max.)</label>
+        <input maxlength="10" id="year-or-date-10-characters-max" type="text" key-data="Year or Date - optional (10 characters max.)" name="properties[Year or Date - optional (10 characters max.)]" placeholder="Example: 2018" class="optional">
+      </div>
+      {% endunless %}
+
+      {% if temp_var_title == 'decanter-only-front-and-back' or temp_var_title == 'engraved-decanter-front-back' or temp_var_title == 'front-back-engraving-2-glasses' or temp_var_title == 'front-back-engraving-4-glasses' %}
+      <div class="field_item t_decanter_back ss-item-required">
+        <label>Message on Back (180 characters max.)</label>
+        <textarea required maxlength="180" class="required blank_check" id="back" key-data="Message on Back (180 characters max.)" name="properties[Message on Back (180 characters max.)]" placeholder="Example: The only thing better than having you as a husband is our children having you as a father. (heart) Mandy"></textarea>
+      </div>
+      {% endif %}
+      
+      {% elsif t_glasses == 1 %}
+      {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}
+      <div class="field_item ss-item-required">
+        <label>Name on Front (15 characters max.)</label>
+        <input maxlength="15" class="required blank_check" id="name" type="text" key-data="Name on Front (15 characters max.)" name="properties[Name on Front (15 characters max.)]" placeholder="Example: Henderson">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Initial on Front (3 characters max.)</label>
+        <input maxlength="3" class="required blank_check" id="initial-on-front-3-characters-max" type="text" key-data="Initial on Front (3 characters max.)" name="properties[Initial on Front (3 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% endif %}
+      
+      {% elsif t_classical_watches == 1 %}
+      {% for option in item.product.options %}
+      {% if option  == 'Personalization' %}
+      {% if item.variant.options[forloop.index0] != 'No' %}
+      {% if item.product.title contains 'Name' %}
+      <div class="field_item ss-item-required">
+        <label>Name on band (24 characters max.)</label>
+        <input maxlength="24" class="required blank_check" id="name-on-band" type="text" key-data="Name on band (24 characters max.)" name="properties[Name on band (24 characters max.)]" placeholder="Example: Henderson">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Love Note (100 characters max.)</label>
+        <textarea maxlength="100" class="required blank_check" id="love-note" key-data="Love Note (100 characters max.)" name="properties[Love Note (100 characters max.)]" placeholder="Example: I love you for all that you are, all that you have been, all that you're yet to be. Forever, Amy"></textarea>
+      </div>
+      {% endif %}
+      
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+
+      {% elsif t_cigar_boxes == 1 %}
+      {% if item.product.title contains 'Cigar Box: Circle' %}
+      <div class="field_item ss-item-required">
+        <label>Initials (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initials (4 characters max.)" name="properties[Initials (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name {% if item.product.title contains 'Diamond' or item.product.title contains 'Heirloom' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Diamond' or item.product.title contains 'Heirloom' %}maxlength="15"{% else %}maxlength="12"{% endif %} class="required blank_check" id="name" type="text" key-data="Name {% if item.product.title contains 'Diamond' or item.product.title contains 'Heirloom' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}" name="properties[Name {% if item.product.title contains 'Diamond' or item.product.title contains 'Heirloom' %}(15 Characters max.){% else %}(12 Characters max.){% endif %}]" placeholder="Example: Johnson">
+      </div>
+      {% if item.product.title contains 'Heirloom' or item.product.title contains 'Modern' %}
+      <div class="field_item">
+        <label>Date - optional (10 characters max.)</label>
+        <input maxlength="10" id="date" type="text" class="optional" key-data="Date - optional (10 characters max.)" name="properties[Date - optional (10 characters max.)]" placeholder="Example: 2018">
+      </div>
+      {% endif %}
+      {% unless item.product.title contains 'Vintage' %}
+      <div class="field_item">
+        <label>Wedding Role - optional (25 characters max.)</label>
+        <input maxlength="25" id="wedding-role" type="text" class="optional" key-data="Wedding Role - optional (25 characters max.)" name="properties[Wedding Role - optional (25 characters max.)]" placeholder="Please enter wedding role if required.">
+      </div>
+      {% endunless %}
+      {% endif %}
+      
+      {% elsif t_leather_wallet == 1 %}
+
+      {% if item.product.title contains "Circle" or item.product.title contains "Father" or item.product.title contains "Valentine" or item.product.title contains "Basic" %}
+      <div class="field_item ss-item-required">
+        <label>Initials on front (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initials on front (4 characters max.)" name="properties[Initials on front (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name on Front {% if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Modern' %}maxlength="10"{% elsif item.product.title contains 'Diamond' %}maxlength="12"{% else %}maxlength="15"{% endif %} class="required blank_check" id="name" type="text" key-data="Name on Front {% if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}" name="properties[Name on Front {% if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}]" placeholder="Example: Johnson">
+      </div>
+      {% endif %}
+      {% if item.product.title contains "Modern" %}
+      <div class="field_item ss-item-required">
+        <label>Year on front - optional {% if item.product.title contains 'Modern' %}(4 Characters max.){% else %}(10 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Modern' %}maxlength="4"{% else %}maxlength="10"{% endif %} id="year" type="text" class="optional" key-data="Year on front - optional {% if item.product.title contains 'Modern' %}(4 Characters max.){% else %}(10 Characters max.){% endif %}" name="properties[Year on front - optional {% if item.product.title contains 'Modern' %}(4 Characters max.){% else %}(10 Characters max.){% endif %}]" placeholder="Example: 2018">
+      </div>
+      {% endif %}
+
+      {% if t_valentine == 1 %}
+      <div class="field_item t_wallet_inside ss-item-required">
+        <label>Message Inside (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="message-inside" key-data="Message Inside (140 characters max.)" name="properties[Message Inside (140 characters max.)]" placeholder="Example: No matter where you are, how near or how far away, you'll always be in my heart. I love you so much, John. You're my everything. (heart) Jen"></textarea>
+      </div>
+      {% elsif item.variant.title == 'Name + Inside Message / Brown' or item.variant.title == 'Name + Inside Message / Black' or item.variant.title == 'Name + Inside (up to 20 words) / Brown' or item.variant.title == 'Yes (up to 20 words) / Brown' or item.variant.title == 'Initials + Inside (up to 20 words) / Brown' or item.variant.title == 'Name + Inside (up to 20 words) / Black' or item.variant.title == 'Yes (up to 20 words) / Black' or item.variant.title == 'Initials + Inside (up to 20 words) / Black' or item.variant.title == 'Initials + Inside Message / Brown' or item.variant.title == 'Initials + Inside Message / Black' %}
+      <div class="field_item t_wallet_inside ss-item-required">
+        <label>Message Inside (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="message-inside" key-data="Message Inside (140 characters max.)" name="properties[Message Inside (140 characters max.)]" placeholder="Example: The only thing better than having you as a husband is our children having you as a father. (heart) Mandy"></textarea>
+      </div>
+      {% endif %}
+      
+      {% elsif t_leather_journal == 1 %}
+      {% if item.product.title contains "Circle" or item.product.title contains "Basic" %}
+      <div class="field_item ss-item-required">
+        <label>Initial on front (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initial on front (4 characters max.)" name="properties[Initial on front (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {%elsif item.product.title contains "Pocket Journal: Mom" %}
+
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label for="name"> {%if item.product.title contains "Pocket Journal: Script" %}NAME (12 CHARACTERS MAX.){%else%}Name on Front {%if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}{%endif%}</label>
+        <input {% if item.product.title contains 'Modern' %}maxlength="10"{% elsif item.product.title contains 'Diamond' %}maxlength="12"{%elsif item.product.title contains "Pocket Journal: Script" %}maxlength="12"{% else %}maxlength="15"{% endif %} class="required blank_check" id="name" type="text" key-data="Name on Front {% if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}" name="properties[Name on Front {% if item.product.title contains 'Modern' %}(10 Characters max.){% elsif item.product.title contains 'Diamond' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}]" placeholder="{%if item.product.title contains "Pocket Journal: Script" %}Example: Kayla{%else%}Example: Johnson{%endif%}">
+      </div>
+      {% endif %}
+
+      {% if item.variant.title == 'Name + Inside Message / Brown' or item.variant.title == 'Name + Inside Message / Black' or item.variant.title == 'Name + Inside (up to 20 words) / Brown' or item.variant.title == 'Yes (up to 20 words) / Brown' or item.variant.title == 'Initials + Inside (up to 20 words) / Brown' or item.variant.title == 'Name + Inside (up to 20 words) / Black' or item.variant.title == 'Yes (up to 20 words) / Black' or item.variant.title == 'Initials + Inside (up to 20 words) / Black' or item.variant.title == 'Initials + Inside Message / Brown' or item.variant.title == 'Initials + Inside Message / Black' or item.variant.title == 'Mom on Front + Inside Message / Black' or item.variant.title == 'Mom on Front + Inside Message / Brown' %}
+      <div class="field_item t_wallet_inside ss-item-required">
+        <label>Message Inside (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="message-inside" key-data="Message Inside (140 characters max.)" name="properties[Message Inside (140 characters max.)]" placeholder="{%if item.product.title contains "Pocket Journal: Mom" or item.product.title contains "Pocket Journal: Script" %}Example: Mom, you have always brought out the best in me, showed endless patience when I fail and encouraged me to get up again. You are my rock. 
+(HEART) Sarah{%else%}Example: The only thing better than having you as a husband is our children having you as a father. (heart) Mandy{%endif%}"></textarea>
+      </div>
+      {% endif %} 
+
+      {% elsif t_leather_wallet_spain == 1 %}
+      <div class="field_item ss-item-required">
+        <label>iniciales (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="iniciales" type="text" key-data="iniciales (4 characters max.)" name="properties[iniciales (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% if item.variant.title == 'iniciales + mensaje dentro / Brown'  %}
+      <div class="field_item t_wallet_spain_inside ss-item-required">
+        <label>mensaje dentro (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="mensaje-dentro" key-data="mensaje dentro (140 characters max.)" name="properties[mensaje dentro (140 characters max.)]" placeholder="Example: Gracias por todo lo que has hecho por nuestra familia. Te amo más de lo que nunca puedas imaginar. ¡Feliz Día del Padre!. (heart) Maria"></textarea>
+      </div>
+      {% endif %}
+      
+      {% elsif t_phone_cases == 1 %}
+      {% if item.product.title contains "Circle" %}
+      <div class="field_item ss-item-required">
+        <label>Initial on front (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initial on front (4 characters max.)" name="properties[Initial on front (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name {% if item.product.title contains 'Diamond' %}(10 Characters max.){% elsif item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Diamond' %}maxlength="10" {% elsif item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' %} maxlength="12" {% else %}maxlength="15"{% endif %} class="required blank_check" id="name" type="text" key-data="Name {% if item.product.title contains 'Diamond' %}(10 Characters max.){% elsif item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}" name="properties[Name {% if item.product.title contains 'Diamond' %}(10 Characters max.){% elsif item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' %}(12 Characters max.){% else %}(15 Characters max.){% endif %}]" placeholder="{%if item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' or item.product.title contains 'Pocket Journal: Mom'%}Example: Kayla{%else%}Example: Johnson{%endif%}">
+      </div>
+      {% endif %}
+
+      {% if item.variant.title == 'Outside + Inside (up to 20 words) / iPhone 6s' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone 7 or 8' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone 7 Plus or 8 Plus' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone X' or item.variant.title == 'Outside + Inside (up to 20 words) / Galaxy S7' or item.variant.title == 'Outside + Inside (up to 20 words) / Galaxy S7 Edge' or item.variant.title == 'Outside + Inside (up to 20 words) / Galaxy S8' or item.variant.title == 'Outside + Inside (up to 20 words) / Galaxy S8 Plus' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone 6s Plus' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone XR' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone XS Max' or item.variant.title == 'Outside + Inside (up to 20 words) / iPhone X or XS'%}
+      <div class="field_item t_phone_cases_inside ss-item-required">
+        <label>Message Inside (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="message-inside" key-data="Message Inside (140 characters max.)" name="properties[Message Inside (140 characters max.)]" placeholder="{%if item.product.title contains 'Arrows Phone Case - Black' or item.product.title contains 'Arrows Phone Case - Grey' or item.product.title contains 'Arrows Phone Case - Brown' or item.product.title contains 'Balloons Phone Case - Black'  or item.product.title contains 'Balloons Phone Case - Grey' or item.product.title contains 'Balloons Phone Case - Brown' or item.product.title contains 'Mandala Phone Case - Black' or item.product.title contains 'Mandala Phone Case - Grey' or item.product.title contains 'Mandala Phone Case - Brown' or item.product.title contains 'Pocket Journal: Mom'%}Example: Mom, you have always brought out the best in me, showed endless patience when I fail and encouraged me to get up again. You are my rock. 
+(HEART) Sarah{%else%}Example: John, I love you for all that you are, all that you have been, all that you're yet to be. (heart) Amy{%endif%}"></textarea>
+      </div>
+      {% endif %}
+      
+      {% elsif t_hip_flask == 1 %}
+      {% if item.product.title contains "Circle" or item.product.title contains "Hex" or item.product.title contains "Ramsey" %}
+      <div class="field_item ss-item-required">
+        <label>Initials (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initials (4 characters max.)" name="properties[Initials (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name on front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 characters max.){% else %}(12 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}maxlength="15"{% else %}maxlength="12"{% endif %} class="required blank_check" id="name" type="text" key-data="Name on front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 characters max.){% else %}(12 Characters max.){% endif %}" name="properties[Name on front {% if item.product.title contains 'Diamond' or item.product.title contains 'Classic' %}(15 characters max.){% else %}(12 Characters max.){% endif %}]" placeholder="Example: Johnson">
+      </div>
+      {% endif %}
+      {% unless item.product.title contains "Tower" or item.product.title contains "Circle" or item.product.title contains "Hex" or item.product.title contains "Ramsey" %}
+      <div class="field_item">
+        <label>Year or Date - optional (10 characters max.)</label>
+        <input maxlength="10" id="date" type="text" class="optional" key-data="Year or Date - optional (10 characters max.)" name="properties[Year or Date - optional (10 characters max.)]" placeholder="Example: 03.05.2018">
+      </div>
+      {% endunless %}
+      {% if item.product.title contains 'Classic' or item.product.title contains "Diamond" %}
+      <div class="field_item">
+        <label>Wedding Role - optional (10 characters max.)</label>
+        <input maxlength="10" id="wedding-role" type="text" class="optional" key-data="Wedding Role - optional (10 characters max.)" name="properties[Wedding Role - optional (10 characters max.)]" placeholder="Please enter wedding role if required.">
+      </div>
+      {% endif %}
+      {% if item.variant.title == 'Front + Back (up to 30 words)'  %}
+      <div class="field_item t_hip_flask_back ss-item-required">
+        <label>Back Message (140 characters max.)</label>
+        <textarea maxlength="140" class="required blank_check" id="back-message" key-data="Back Message (140 characters max.)" name="properties[Back Message (140 characters max.)]" placeholder="Example: I love you for all that you are, all that you have been, all that you're yet to be."></textarea>
+      </div>
+      {% endif %}
+      
+      {% elsif t_pocket_watches == 1 %}
+      {% if item.product.title contains "Circle" or item.product.title contains "Rosette" %}
+      <div class="field_item ss-item-required">
+        <label>Initials (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initials (4 characters max.)" name="properties[Initials (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name {% if item.item.product.title contains 'Diamond' %}(15 characters max.){% else %}(12 Characters max.){% endif %}</label>
+        <input {% if item.product.title contains 'Diamond' %}maxlength="15"{% else %}maxlength="12"{% endif %} class="required blank_check" id="name" type="text" key-data="Name {% if item.product.title contains 'Diamond' %}(15 characters max.){% else %}(12 Characters max.){% endif %}" name="properties[Name {% if item.product.title contains 'Diamond' %}(15 characters max.){% else %}(12 Characters max.){% endif %}]" placeholder="Example: Johnson">
+      </div>
+      {% if item.product.title contains 'Diamond' %}
+      <div class="field_item ss-item-required">
+        <label>Date - optional (10 characters max.)</label>
+        <input maxlength="10" id="date" type="text" class="optional" key-data="Date - optional (10 characters max.)" name="properties[Date - optional (10 characters max.)]" placeholder="Example: 03.05.18">
+      </div>
+      {% elsif item.product.title contains 'Medalist' %}
+      <div class="field_item ">
+        <label>Wedding Role - optional (25 characters max.)</label>
+        <input maxlength="25" id="wedding-role" type="text" class="optional" key-data="edding Role - optional (25 characters max.)" name="properties[Wedding Role - optional (25 characters max.)]" placeholder="Please enter wedding role if required.">
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% elsif t_glass_flask == 1 %}
+      {% if item.product.title contains "Circle" %}
+      <div class="field_item ss-item-required">
+        <label>Initials (4 characters max.)</label>
+        <input maxlength="4" class="required blank_check" id="initials" type="text" key-data="Initials (4 characters max.)" name="properties[Initials (4 characters max.)]" placeholder="Example: JB">
+      </div>
+      {% else %}
+      <div class="field_item ss-item-required">
+        <label>Name (15 characters max.)</label>
+        <input maxlength="15" class="required blank_check" id="name" type="text" key-data="Name (15 characters max.)" name="properties[Name (15 characters max.)]" placeholder="Example: Johnson">
+      </div>
+      {% endif %}
+      {% if item.product.title contains 'Classic' or item.product.title contains 'Vintage' or item.product.title contains 'Modern' %}
+      <div class="field_item">
+        <label>Year or Date - optional (10 characters max.)</label>
+        <input maxlength="10" id="year-or-date-10-characters-max" type="text" class="optional" key-data="Year or Date - optional (10 characters max.)" name="properties[Year or Date - optional (10 characters max.)]" placeholder="Example: 2018">
+      </div>
+      {% endif %}
+
+      {% endif %}
+    </div>
+  </div>      
+</div>  
+
+{% endif %} 
+<!--  personlization fields end-->
+{% else %}
+	
+  {% for p in item.properties %}
+  	{% assign property_num = forloop.length %}
+  {% endfor %}
+
+  {% for p in item.properties %}
+  	{% assign first_character_in_key = p.first | truncate: 1, '' %}
+  	{% if p.last == blank or first_character_in_key == '_' %}
+  		{% assign property_num = property_num | minus: 1 %}
+  	{% endif %}
+  {% endfor %}
+
+	{% for p in item.properties %}
+	 {% assign first_character_in_key = p.first | truncate: 1, '' %}
+      {% unless p.last == blank or first_character_in_key == '_' or p.first == 'product_index' %}
+        <div class="clear_both"></div>
+        <label class="prop_left"> {{ p.first }}:</label>
+        <div class="cart_item_edit_btn action_button"  data-line="{{ item_num }}" item-loop="{{ forloop.index0 }}">edit</div>
+        <div class="clear_both"></div>
+
+        {% comment %}
+            Check if there was an uploaded file associated
+        {% endcomment %}
+
+        {% if p.last contains '/uploads/' %}
+            <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+        {% else %}
+
+            {% if p.first contains 'Optional' %}
+                {% assign required_fileds = '' %}
+            {% else %}
+                {% assign required_fileds = 'required' %}
+            {% endif %}
+
+            <pre class="cart_pre_area cart_pre hide" id="cart_pre_{{ item_num }}{{ forloop.index0 }}"><textarea {{required_fileds}} property-count="{{ property_num }}" key-data="{{ p.first }}" item-loop="{{ forloop.index0 }}" data-line="{{ item_num }}" id="property_{{ item_num }}{{ forloop.index0 }}" class="{{required_fileds}} cart_nt_inline">{{ p.last }}</textarea></pre>
+
+            <pre class="cart_pre_simpl cart_pre" id="cart_pre_visi_{{ item_num }}{{ forloop.index0 }}"><div class= "grey_bg">{{ p.last }}</div></pre>
+        {% endif %}
+      {% endunless %}
+	{% endfor %}
+
+{% endif %}

@@ -1,0 +1,26 @@
+<!-- Subscriptions Powered by ReCharge Payments: Begin Liquid Code -->
+<!--
+	Subscription Cart Item
+	https://rechargepayments.com: v4
+-->
+{% if item.selling_plan_allocation.selling_plan.name %}
+    <div class="rc_cart__selling-plan">
+        <small>
+            {{ item.selling_plan_allocation.selling_plan.name -}}
+            {%- if item.selling_plan_allocation.selling_plan.price_adjustments.size > 0 -%}
+                , save
+            {% endif %}
+            {% for price_adjustment in item.selling_plan_allocation.selling_plan.price_adjustments %}
+                {% if price_adjustment.value %}
+                    {% if price_adjustment.value_type == 'percentage' %}
+                        {{ price_adjustment.value }}%
+                    {% else %}
+                        {{ price_adjustment.value | money }}
+                    {% endif %}
+                    on each order
+                {% endif %}
+            {% endfor %}
+        </small>
+    </div>
+{% endif %}
+<!-- Subscriptions Powered by ReCharge Payments: End Liquid Code -->

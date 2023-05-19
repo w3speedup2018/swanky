@@ -1,0 +1,41 @@
+<div>
+  <h1 class="account_pageTitle">My Orders</h1>
+  <div class="col-12 ap__card-header">
+  </div>
+  <div class="card ap__card">
+    <div class="row ap__card-row">
+      {% if customer.orders.size != 0 %}
+      <table width="100%">
+        <thead>
+          <tr>
+            <th>{{ 'customer.orders.order_number' | t }}</th>
+            <th>{{ 'customer.orders.date' | t }}</th>
+            <th>{{ 'customer.orders.payment_status' | t }}</th>
+            <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+            <th>{{ 'customer.orders.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in customer.orders %}
+          <tr class="{% cycle 'odd', 'even' %} {% if order.cancelled %}cancelled_order{% endif %}">
+            <td>{{ order.name | link_to: order.customer_url }}</td>
+            <td>{{ order.created_at | date: format: "month_day_year" }}</td>
+            <td>{{ order.financial_status_label }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+            <td>
+              <span class="money">{{ order.total_price | money }}</span>
+              
+            </td>
+        
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="d-block text-center mx-auto">
+        <p class="ap__card-text mx-auto" style="text-align: left;">No orders!</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

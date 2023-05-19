@@ -1,0 +1,170 @@
+/*********************** Custom CSS for Boost Filter & Search  ************************/
+{% assign breakpointMobile = '767px' %}
+{% assign breakpointDesktop = '768px' %}
+{% assign searchBoxMobileHeight = '64px' %}
+
+/**************************** Place your custom css below  ****************************/
+.boost-pfs-search-no-result-body .feature_divider {
+  display: none;
+}
+.boost-pfs-filter-bottom-pagination {
+  margin-bottom: 30px;
+}
+.boost-pfs-filter-load-more {
+  margin-top: 20px;
+}
+
+.collection-template-section .load-more {
+  display: none !important;
+}
+
+.boost-pfs-filter-tree-h {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.boost-pfs-in-collection-search {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.boost-pfs-in-collection-search-wrapper {
+  margin: 0 10px;
+}
+
+/* Search */
+.boost-pfs-search-form {
+  margin: 0 auto 30px;
+}
+
+.boost-pfs-search-form .boost-pfs-search-box {
+  padding: 0 10px;
+}
+
+.boost-pfs-search-result-number {
+  clear: both;
+  text-align: center;
+}
+
+.search__results-wrapper {
+  display: none !important;
+}
+
+.boost-pfs-filter-top-sorting {
+  width: 65%;
+}
+
+.boost-pfs-filter-top-sorting-wrapper {
+  text-align: right;
+}
+
+.boost-pfs-filter-top-sorting-wrapper label {
+  margin-right: 8px;
+}
+
+/* Filter */
+/* .boost-pfs-filter-block-title a span,
+.boost-pfs-filter-option-label span,
+.boost-pfs-filter-option-label a {
+  color: black;
+} */
+
+.boost-pfs-filter-tree-open-body .sidebar {
+  -webkit-transform: none;
+}
+
+/**** Custom Search result toolbar ****/
+.boost-pfs-search-result-toolbar {
+  display: flex;
+  align-items: center;
+  margin: 35px 0;
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+  white-space: nowrap;
+}
+
+.boost-pfs-search-result-toolbar .boost-pfs-search-result-item:first-child {
+  flex: auto;
+}
+
+.boost-pfs-search-result-toolbar .boost-pfs-search-result-panel-controls {
+  padding: 17px 0;
+  margin: 0;
+}
+
+.boost-pfs-search-result-toolbar .boost-pfs-search-result-panel-controls li {
+  margin-bottom: 0;
+  line-height: 1em;
+}
+
+.boost-pfs-search-result-toolbar .boost-pfs-search-result-panel-controls li button {
+  min-height: initial;
+  height: initial;
+  color: #000;
+}
+
+.boost-pfs-search-result-toolbar .boost-pfs-search-total-result {
+  font-style: italic;
+}
+.mobile-search input.boost-pfs-search-box {
+  font-family: {{ settings.nav__font.family }}, {{ settings.nav__font.fallback_families }};
+  font-weight: {{ settings.nav__font.weight }};
+  font-style: {{ settings.nav__font.style }};
+  font-size: 16px;
+  text-transform: {{ settings.nav_font_style }};
+  padding-left: 40px;
+  padding-right: 20px;
+  border: 0;
+  border-bottom: 1px solid {{ settings.border_color }};
+}
+.mobile-search input.boost-pfs-search-box:focus, .mobile-search input.boost-pfs-search-box:active {
+  border-bottom: 1px solid {{ settings.border_color }};
+}
+
+.boost-pfs-search-result-list-item .boost-pfs-search-result-list-item-title {
+  color: #333;
+}
+.boost-pfs-search-result-wrap {
+  width: 100%;
+}
+
+@media (min-width: {{breakpointDesktop}}) {
+  .boost-pfs-filter-tree-desktop-button-sticky-wrapper {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  .boost-pfs-filter-tree-desktop-button {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+@media screen and (max-width: {{breakpointMobile}}) {
+  .boost-pfs-filter-top-sorting {
+    width: 100%;
+  }
+
+  .boost-pfs-filter-top-sorting-wrapper {
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+    .boost-pfs-search-result-toolbar .boost-pfs-search-total-result {
+    display: none;
+  }
+
+  .boost-pfs-filter-tree-mobile-button {
+    width: 100%;
+  }
+
+  .search__results-wrapper {
+    display: none !important;
+  }
+  .boost-pfs-search-suggestion-wrapper {
+        z-index: 999999999;
+    }
+}

@@ -1,0 +1,40 @@
+{% for link in linklists[sub-menu].links %}
+  {%- comment %}<locksmith:3ff1>{% endcomment -%}
+    {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: link, subject_parent: linklists[sub-menu], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+  {%- comment %}</locksmith:3ff1>{% endcomment -%}
+  {% if linklists[link.handle] != empty %}
+    {% assign link_count = linklists[link.handle].links | size %}
+    <div class="dropdown_container" data-dropdown="{{ link.handle }}">
+      <div class="dropdown menu">
+        <div class="dropdown_content {% if link_count < 4 %}dropdown_narrow{% endif %}">
+          {% for sublink in linklists[link.handle].links %}
+            {%- comment %}<locksmith:78b8>{% endcomment -%}
+              {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: sublink, subject_parent: linklists[link.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+            {%- comment %}</locksmith:78b8>{% endcomment -%}
+            <div class="dropdown_column">
+              <ul class="{% if linklists[sublink.handle] != empty %}dropdown_title{% else %}dropdown_item{% endif %}">
+                <li>
+                  <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                </li>
+              </ul>
+
+              {% if linklists[sublink.handle] != empty %}
+                <ul>
+                  {% for subsublink in linklists[sublink.handle].links %}
+                    {%- comment %}<locksmith:a6ca>{% endcomment -%}
+                      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: subsublink, subject_parent: linklists[sublink.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+                    {%- comment %}</locksmith:a6ca>{% endcomment -%}
+                    <li>
+                      <a href="{{ subsublink.url }}">{{ subsublink.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+            {% cycle link.handle: '', '', '', '', '<div class="dropdown_row"></div>' %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

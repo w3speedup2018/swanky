@@ -1,0 +1,107 @@
+{% unless template contains 'product' %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "itemListElement": [
+        {%- comment %}<locksmith:8dff>{% endcomment -%}
+          {%- assign locksmith_ad4e_forloop__size = 0 %}{% for product in products limit: limit %}
+{% if product.handle contains "docapp-free-gift-" %}{% continue %}{% endif %}
+{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_ad4e_forloop__size = locksmith_ad4e_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_ad4e_forloop__index = nil -%}
+        {%- comment %}</locksmith:8dff>{% endcomment -%}
+        {% for product in products limit: limit %}
+{%- comment %}<locksmith:adba>{% endcomment -%}
+  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_ad4e_forloop__index == nil %}{% assign locksmith_ad4e_forloop__index = 1 %}{% assign locksmith_ad4e_forloop__index0 = 0 %}{% else %}{% assign locksmith_ad4e_forloop__index = locksmith_ad4e_forloop__index | plus: 1 %}{% assign locksmith_ad4e_forloop__index0 = locksmith_ad4e_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_ad4e_forloop__index == 1 %}{% assign locksmith_ad4e_forloop__first = true %}{% else %}{% assign locksmith_ad4e_forloop__first = false %}{% endif %}{% if locksmith_ad4e_forloop__index == locksmith_ad4e_forloop__size %}{% assign locksmith_ad4e_forloop__last = true %}{% else %}{% assign locksmith_ad4e_forloop__last = false %}{% endif %}{% assign locksmith_ad4e_forloop__rindex = locksmith_ad4e_forloop__size | minus: locksmith_ad4e_forloop__index | minus: 1 %}{% assign locksmith_ad4e_forloop__rindex0 = locksmith_ad4e_forloop__size | minus: locksmith_ad4e_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+{%- comment %}</locksmith:adba>{% endcomment -%}
+{% if product.handle contains "docapp-free-gift-" %}{% continue %}{% endif %}
+
+          {
+            "@type": "ListItem",
+            "position": "{{ locksmith_ad4e_forloop__index | json }}",
+            "url": "{{ shop.url }}{{ product.url }}",
+            "name": "{{ product.title | escape }}"
+          } {%- unless locksmith_ad4e_forloop__last -%},{%- endunless -%}
+        {% endfor %}
+      ]
+    }
+  </script>
+{% endunless %}
+
+{% if settings.pagination_type == 'load_more_button' %}
+  {% assign paginationType = 'data-load-more--grid' %}
+{% endif %}
+
+<div
+  class="
+    product-list
+    product-list--collection
+    is-flex
+    is-flex-wrap
+    equal-columns--outside-trim
+  "
+  itemtype="http://schema.org/ItemList"
+  {{ paginationType }}
+>
+  {% assign for_limit = limit %}
+
+  {% for product in products limit: limit %}
+{%- comment %}<locksmith:9130>{% endcomment -%}
+  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+{%- comment %}</locksmith:9130>{% endcomment -%}
+{% if product.handle contains "docapp-free-gift-" %}{% continue %}{% endif %}
+
+    {% comment %} if product display is in the loop of products increase limit by one {% endcomment %}
+    {% if product.id == skip_product.id  %}
+      {% assign for_limit = limit | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+
+  {% for product in products limit: for_limit %}
+{%- comment %}<locksmith:cf7b>{% endcomment -%}
+  {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: product, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+{%- comment %}</locksmith:cf7b>{% endcomment -%}
+{% if product.handle contains "docapp-free-gift-" %}{% continue %}{% endif %}
+
+    {% comment %} Skip product if we're on its product page {% endcomment %}
+    {% if product.id != skip_product.id %}
+      {%
+        render 'product-thumbnail',
+        product: product,
+        collection: collection,
+        products_per_row: products_per_row,
+        sidebar: sidebar,
+      %}
+    {% endif %}
+  {% endfor %}
+
+  {% if template contains 'collection' %}
+    {% if settings.pagination_type != 'basic_pagination' %}
+      {% if paginate.next.url %}
+        <span class="js-load-more load-more">
+          <a href="{{ paginate.next.url }}" data-no-instant data-load-more class="global-button global-button--text">
+            {% if template contains 'collection' %}
+              {{ 'collections.general.load_more' | t }}
+            {% elsif template contains 'search' %}
+              {{ 'general.search.load_more' | t }}
+            {% endif %}
+          </a>
+        </span>
+      {% endif %}
+    {% endif %}
+  {% elsif template contains 'search' %}
+    {% if settings.pagination_type != 'basic_pagination' %}
+      {% if paginate.next.url %}
+        <span class="js-load-more load-more">
+          <a href="{{ paginate.next.url }}" data-no-instant data-load-more class="global-button global-button--text">
+            {% if template contains 'collection' %}
+              {{ 'collections.general.load_more' | t }}
+            {% elsif template contains 'search' %}
+              {{ 'general.search.load_more' | t }}
+            {% endif %}
+          </a>
+        </span>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+</div>
+<div class="load-more__icon"></div>

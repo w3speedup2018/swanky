@@ -1,0 +1,17 @@
+{%- assign collection_handles = product.collections | map: 'handle' -%}
+
+{% if settings.quick_shop_style == 'inline' and settings.quick_shop_enabled %}
+  {% unless collection_handles contains 'coming-soon' %}
+  <div class="inline-quickshop js-product_section product-{{ product.id }}">
+    {% render 'product-form',
+      product: product,
+      collection_handles: collection_handles,
+      show_payment_button_quickshop: settings.show_payment_button
+    %}
+  </div>
+  {% endunless %}
+{% endif %}
+
+{% if settings.quick_shop_enabled and settings.quick_shop_style == 'popup' %}
+  {% render 'quick-shop-button', product: product %}
+{% endif %}

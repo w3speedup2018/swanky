@@ -1,0 +1,25 @@
+<form action="/cart/add" method="post" id="productid{{- product.id -}}" data-product-title="{{ product.title}}">
+  <input class="hide" type="number" hidden hide min="1" class="quantity" name="quantity" id="quantity" {%if forloop.index > 4 %} value='1' {% else %} value='1' {% endif %} />
+  {% for group in product.selling_plan_groups %}
+    {% for selling_plan in group.selling_plans %}
+  <h5> {{ block.settings.small }}</h5>
+    	<input class="hide" type="radio" name="selling_plan" value="{{ selling_plan.id }}" data-plan-name="{{ selling_plan.name }}"
+               {% if forloop.length == 1 %}
+               	checked="checked"
+               {% endif %}
+               >
+        <input class="hide" type="radio" name="properties[_selling_plan]" value="{{ selling_plan.name }}" data-plan-name="{{ selling_plan.name }}"
+               {% if forloop.length == 1 %}
+               checked="checked"
+               {% endif %}
+               >
+    {% endfor %}
+  {% endfor %}
+
+  {% if product.variants.size == 1 %}
+  <input type="hidden" name="id" value="{{ product.first_available_variant.id }}" checked="checked" />
+  {% else %}
+  <select name="id">{% for variant in product.variants %}<option value="{{ variant.id }}">{{ variant.title }}</option>{% endfor %}</select>
+  {% endif %}
+  <div><input class="hide" type="submit" class="btn" value="Add to cart"></div>  
+</form>

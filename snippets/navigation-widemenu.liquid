@@ -1,0 +1,38 @@
+{% comment %}
+
+  @param menu {Linklist} [Optional] Linklist for which to render nav items.
+
+{% endcomment %}
+
+<ul class="widemenu">
+  {% for menu_item in menu.links %}
+    {%- comment %}<locksmith:4cc1>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: menu_item, subject_parent: menu, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:4cc1>{% endcomment -%}
+    {% if linklists[menu_item.handle].links.size > 0 %}
+      <li class="widemenu__submenu">
+        <a href="{{ menu_item.url }}" class="widemenu__submenu-heading widemenu__link">
+          {{ menu_item.title | escape }}
+        </a>
+        <ul class="widemenu__submenu-items">
+        {% for sub_item in linklists[menu_item.handle].links %}
+          {%- comment %}<locksmith:c201>{% endcomment -%}
+            {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: sub_item, subject_parent: linklists[menu_item.handle], variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% else %}{% continue %}{% endif -%}
+          {%- comment %}</locksmith:c201>{% endcomment -%}
+          <li class="widemenu__submenu-item">
+            <a href="{{ sub_item.url }}" class="widemenu__submenu-item-link widemenu__link">
+              {{ sub_item.title | escape }}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+    {% else %}
+      <li class="widemenu__item">
+        <a href="{{ menu_item.url }}" class="widemenu__item-heading widemenu__link">
+          {{ menu_item.title | escape }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

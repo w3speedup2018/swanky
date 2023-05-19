@@ -1,0 +1,200 @@
+{%- if form_style_type == '0' -%}
+<div class="page-width bsscommerce-passcode-container bsscommerce-passcode-form-style-{{ form_style_type }}">
+  <div class="bss-commerce-passcode-container-1" style="max-width: 420px;">
+    <div class="bss-commerce-passcode-container-2" style="width: 100%;">
+      <div id="BsscommercePasswordForm">
+      <span class="bss-commerce-passcode-message">{{ passcode_message }}</span>
+        <div class="bss-commerce-password-form-vertical">
+          <span><b>{{ passcode_input_label }}</b></span>
+          <form id="bsscommerce-ltap-password" class="cart" novalidate style="display: flex">
+              <div class="bss-password-form-wrapper" style="display: flex; flex: 1; align-items: center; border: 1px solid #ccc; border-radius: 5px; margin-right: 6px; background-color: #fff">
+                  <input
+                          type="password"
+                          value=""
+                          name="attributes[{{ passAttrName }}]"
+                          id="bsscommerce-password"
+                          class="input-full"
+                          style="
+                              width: 100%;
+                              padding: 8px 0 8px 10px;
+                              font-size: 14px;
+                              border-radius: 5px;
+                              border: none;
+                              margin-right: 5px;
+                              box-shadow: none;
+                              outline: none;"
+                          placeholder="
+                                      {%- if input_placeholder_form_submit == "" -%}
+                                          {{ 'general.password_page.login_form_password_placeholder' | t }}
+                                      {%- else -%}
+                                          {{ input_placeholder_form_submit }}
+                                      {%- endif -%}
+                                  "
+                  />
+                  <button class="toggle-passcode-input" type="button" style="background-color: transparent; border: none; line-height: 0; padding: 8px; cursor: pointer; fill: #BABEC3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/></svg>
+                  </button>
+              </div>
+                  <input id="bsscommerce-password-submit"
+                      style="
+                          background-color: #fff;
+                          color: #333;
+                          border: 1px solid #ccc;
+                          padding: 0 15px;
+                          border-radius: 5px;
+                          cursor: pointer;
+                          font-size: 14px;
+                          font-weight: bold;"
+                      type="submit"
+                      class="btn"
+                      value="
+                          {%- if button_text_form_submit == "" -%}
+                              {{ 'general.password_page.login_form_submit' | t }}
+                          {%- else -%}
+                              {{ button_text_form_submit }}
+                          {%- endif -%}
+                      "
+                  />
+          </form>
+            {%- if entered_password != password and entered_password -%}
+              <div class="form-message form-message--error" style="text-align: left; font-size: 16px; color: red;">
+                <div style="display: flex; align-items: center">
+                  {% capture snippet-error-icon %}{% render 'icon-error' %}{% endcapture %}
+                  {% unless snippet-error-icon contains "Liquid error" %}
+                    <span style="width: 18px; margin-right: 6px; display: inherit;">
+                      {% render 'icon-error' %}
+                    </span>
+                  {% endunless %}
+                  {{ message_passcode_incorrect }}
+                </div>
+              </div>
+            {%- endif -%}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- else -%}
+  <div class="page-width bsscommerce-passcode-container bsscommerce-passcode-form-style-{{ form_style_type }}">
+    <div class="bss-commerce-passcode-container-1" style="width: 100%;">
+        <div class="bss-commerce-passcode-container-2" style="width: 100%;">
+            <div id="BsscommercePasswordForm">
+                <div class="form-vertical">
+                    {%- if entered_password != password and entered_password -%}
+                        <div class="form-message form-message--error" style="text-align: center">
+                            {{ message_passcode_incorrect }}
+                        </div>
+                    {%- endif -%}
+                    <div class="bsscommerce-password-message-container">
+
+                        <div style="display: flex; flex-direction: column">{{ passcode_message }}
+                        </div>
+                    </div>
+                    <br/>
+                    <span><b>{{ passcode_input_label }}</b></span>
+                    <br/>
+                    <form id="bsscommerce-ltap-password" class="cart" novalidate>
+                        <input type="password" value="" name="attributes[{{ passAttrName }}]" id="bsscommerce-password" class="input-full" placeholder="
+                                            {%- if input_placeholder_form_submit == " " -%}
+                                                    {{ 'general.password_page.login_form_password_placeholder' | t }}
+                                            {%- else -%}
+                                                {{ input_placeholder_form_submit }}
+                                            {%- endif -%}
+                                        "/>
+                        <div class="text-center">
+                            <p>
+                                <input id="bsscommerce-password-submit" type="submit" class="btn" value="
+                                                        {%- if button_text_form_submit == " " -%}
+                                                        {{ 'general.password_page.login_form_submit' | t }}
+                                                    {%- else -%}
+                                                        {{ button_text_form_submit }}
+                                                    {%- endif -%}
+                                                "/>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+{%- endif -%}
+
+<script>
+  let passcodeElement = document.getElementById("bsscommerce-password");
+  let formData = new FormData();
+  formData.append(passcodeElement.name, passcodeElement.value);
+
+
+  if(passcodeElement){
+    let togglePasscodeBtn = document.querySelector(".toggle-passcode-input");
+    if(togglePasscodeBtn){
+      togglePasscodeBtn.addEventListener("click", function (e) {
+        let inputPasscode = document.getElementById("bsscommerce-password");
+        if (inputPasscode.type === "password") {
+          inputPasscode.type = "text";
+          e.target.closest(".toggle-passcode-input").style.fill = "#5C5F62";
+        }
+        else {
+          inputPasscode.type = "password";
+          e.target.closest(".toggle-passcode-input").style.fill = "#BABEC3";
+        }
+      });
+    }
+  }
+
+  let xmlHttp = new XMLHttpRequest();
+
+  xmlHttp.open("post", "/cart/update.js");
+  xmlHttp.send(formData);
+
+  document.getElementById('bsscommerce-ltap-password').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let passcodeElement = document.getElementById("bsscommerce-password");
+
+    {% if is_call_api == "true" %}
+      // handle call API save passcode actions
+      const customerId = window.__st.hasOwnProperty('cid') ? window.__st.cid : ""; 
+      if(customerId) {
+        let bssPw = "{{ password }}" || "";
+        let bssPwList = bssPw.split("*bss*").filter(item => !!item);
+
+        if(bssPwList.includes(passcodeElement.value)) {
+          let url = "{{ save_action_api }}"
+          let xmlHttp = new XMLHttpRequest();
+
+          let data = JSON.stringify({
+            domain: `${window.Shopify.shop}`,
+            customerId: customerId,
+            passcode: passcodeElement.value,
+            ruleId: "{{ rule_id }}",
+          });
+
+          xmlHttp.open("POST", url);
+          xmlHttp.setRequestHeader("Content-Type", "application/json");
+          xmlHttp.send(data);
+        }
+      }
+    {% endif %}
+
+    passcodeElement.addEventListener("input", function() {
+      passcodeElement.classList.remove("input--error");
+    });
+
+    if (passcodeElement.value !== "") {
+      let formData = new FormData();
+      formData.append(passcodeElement.name, passcodeElement.value);
+      let xmlHttp = new XMLHttpRequest();
+      xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          location.reload();
+        }
+      };
+
+      xmlHttp.open("post", "/cart/update.js");
+      xmlHttp.send(formData);
+    } else {
+      passcodeElement.classList.add("input--error");
+    }
+  });
+</script>

@@ -1,0 +1,408 @@
+<script type="text/javascript">
+  // Hold on to current cart object to check against
+  // available inventory before updating cart in
+  // quantity-selectors.js
+  window.cartObject = {{ cart | json }};
+</script>
+
+<!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
+<script type="text/javascript">
+function updateCartItemCallback(cart, href) {
+    
+    // Reload the page to show the empty cart if no items
+    if (cart.item_count === 0) {
+      location.reload();
+      return;
+    }
+    
+    setTimeout(function(){
+      window.location.href=href;
+    },400);
+}// function closed
+  
+jQuery(function() {
+  
+  //this is used for additional checkout button
+  var fields_length = $(".ss-item-required").length;
+  if(fields_length)
+  {
+    $("#sr_additional_checkout").hide();
+  }
+  else
+  {
+    $("#sr_additional_checkout").show();
+  }
+  
+  //this is used for checkout button click
+  jQuery('body').on('click', '[name="checkout"], [name="goto_pp"], [name="goto_gc"]', function() {
+    
+    var formIsValid = true;
+    
+    var ref = $("#cart_form").find(".required");
+    var error_first_index = 'blank';
+    
+    $(ref).each(function(index) {
+      
+      // Check for blank spaces to stop
+      var trimmedValue = jQuery.trim($(this).val());
+	  var maxlimit = jQuery.trim($(this).attr("maxlength"));
+      maxlimit = parseInt(maxlimit);
+      var char_total = trimmedValue.length;
+      char_total = parseInt(char_total);
+      
+      if ($(this).val() == null || $(this).val() == 'null' || $(this).val() == '' || trimmedValue.length == 0) 
+      {
+        if(error_first_index=='blank')
+        {error_first_index=index;}
+        
+        $(this).parent().find('.req_text').remove();
+        formIsValid = false;
+        $(this).css("border", "1px solid red");
+        $(this).parent().append('<p class="req_text" style="color:red;">*Required field.</p>');
+      }
+      else if(char_total>maxlimit)
+      {
+        if(error_first_index=='blank')
+        {error_first_index=index;}
+        
+        $(this).parent().find('.req_text').remove();
+        formIsValid = false;
+        $(this).css("border", "1px solid red");
+        $(this).parent().append("<p class='req_text' style='color:red;'>*Characters can't be more than " + maxlimit + ".</p>");
+      }
+      else
+      {
+        $(this).parent().find('.req_text').remove();
+        $(this).css("border", "none");
+      }
+    });
+    
+    if (formIsValid)
+    {
+      //this is update code for all properties start
+    	var sr_save_btn = $("#cart_form").find(".sr_save_btn");
+      	if(sr_save_btn.length>0)
+        {
+          $(sr_save_btn).each(function(e){
+            
+            var line_item_no = $(this).attr("data-line");
+			
+          	var ref_required = $("#myform_"+line_item_no).find(".required");
+          	var ref_optional = $("#myform_"+line_item_no).find(".optional");
+
+            //save this code start
+              var line = parseInt(line_item_no);
+              
+              var property_json = {};
+              property_json.properties = [];
+
+              var temp_json = {};
+
+              var temp_key_data = "";
+              var temp_get_name = "";
+
+              if(ref_required.length>=1)
+              {
+                $(ref_required).each(function() {
+                  temp_key_data = jQuery.trim($(this).val());
+                  temp_get_name = jQuery.trim($(this).attr("key-data"));
+
+                    var odata = {
+                      [temp_get_name]: temp_key_data
+                    }
+                  temp_json = Object.assign(temp_json, odata);
+                });
+
+              }// closed
+
+              if(ref_optional.length>=1)
+              {
+                $(ref_optional).each(function() {
+                  temp_key_data = jQuery.trim($(this).val());
+                  temp_get_name = jQuery.trim($(this).attr("key-data"));
+
+                    var odata = {
+                      [temp_get_name]: temp_key_data
+                    }
+                  temp_json = Object.assign(temp_json, odata);
+                });
+              }//closed
+
+              property_json.properties.push(temp_json); 
+
+              var params = {
+                type: 'POST',
+                url: '/cart/change.js',
+                data: { line: line, properties: property_json.properties[0] },
+                dataType: 'json',
+                async:false,
+                success:function(cart) {
+                  console.log('update data');
+                }
+              };
+
+              $.ajax(params);
+            //save this code closed
+          });
+          
+          window.location.href="/checkout";
+          
+    	}//if closed
+        else
+        {
+       	  window.location.href="/checkout";
+        }
+      //this is update code for all properties closed
+    }
+    else 
+    {
+      $(ref).eq(error_first_index).focus();
+      return false;
+    }
+  });//closed
+  
+  //this is used for click on edit button
+  $(".cart_item_edit_btn").click(function(evt) {
+    var $pre_target = $(evt.currentTarget);
+    var d_line = $pre_target.attr('data-line');
+    var d_loop = $pre_target.attr('item-loop');
+    
+    $("#cart_pre_" + d_line + d_loop).removeClass("hide");
+    
+    $("#cart_pre_" + d_line + d_loop).show();
+    $("#cart_pre_visi_" + d_line + d_loop).hide();
+    $pre_target.after('<a class="cart_item_sav_btn action_button" data-line="'+ d_line +'" item-loop="'+ d_loop +'">SAVE</a>')
+    $pre_target.remove();
+  });//closed
+   
+  
+//this is used for item properties update click on save button
+$(document).on('click', '.cart_item_sav_btn', function(evt) { 
+  var $pre_target = $(evt.currentTarget);
+  var d_line = $pre_target.attr('data-line');
+  var d_loop = $pre_target.attr('item-loop');
+  var new_string_create = '#cart_pre_' + d_line + d_loop;
+  var target_tarea = $(new_string_create).find('textarea');
+  var in_value = target_tarea.val();
+  var trimmedValue = jQuery.trim(in_value);
+  var key_data = target_tarea.attr('key-data');
+  var char_lim = key_data.match(/(\d+)/g);
+  var check_optional = 'no';
+  if (key_data.indexOf("Optional") >= 0){char_lim = 1000;check_optional = 'yes';}
+  var char_count = in_value.length;
+
+  // check if text length is bigger than requirement
+  if ( char_count > char_lim )
+  {
+    target_tarea.css("border", "red 1px solid");
+    $('.req_text').remove();
+    target_tarea.after("<span class='req_text' style='color:red;'>*Characters can't be more than " + char_lim + ".</span>");          
+  }
+  else if ((in_value == null || in_value == 'null' || in_value == '' || trimmedValue.length == 0)&&check_optional == 'no')
+  {
+    target_tarea.css("border", "red 1px solid");
+    $('.req_text').remove();
+    target_tarea.after("<span class='req_text' style='color:red;'>*Required field.</span>");
+  }
+  else
+  {
+    $("#cart_pre_" + d_line + d_loop).hide();
+    $("#cart_pre_visi_" + d_line + d_loop).show();
+    $pre_target.after('<div class="cart_item_edit_btn action_button" data-line="'+ d_line +'" item-loop="'+ d_loop +'">Edit</div>')
+    $pre_target.remove();
+  }
+});//closed
+  
+  // this is used for first time update properties
+  $(".sr_save_btn").click(function(evt) { 
+    var new_herf= document.referrer;
+    
+    var line_item_no = $(this).attr("data-line");
+    
+    var formIsValid = true;
+    
+    var ref_required = $("#myform_"+line_item_no).find(".required");
+    var ref_optional = $("#myform_"+line_item_no).find(".optional");
+    
+    if (formIsValid)
+    {
+      var properties_count = parseInt(ref_required.length)+parseInt(ref_optional.length);
+      
+      //save this code start
+        var line = parseInt(line_item_no);
+        var prop_count = parseInt(properties_count);
+        
+        var property_json = {};
+        property_json.properties = [];
+      	
+        var temp_json = {};
+      
+      	var temp_key_data = "";
+        var temp_get_name = "";
+      
+        if(ref_required.length>=1)
+        {
+          $(ref_required).each(function() {
+            temp_key_data = jQuery.trim($(this).val());
+            
+            if(temp_key_data!='')
+            {  
+            	temp_get_name = jQuery.trim($(this).attr("key-data"));
+                var odata = {
+                 [temp_get_name]: temp_key_data
+                }
+                temp_json = Object.assign(temp_json, odata);
+            }//closed if
+          });
+        }// closed
+      
+        if(ref_optional.length>=1)
+        {
+          $(ref_optional).each(function() {
+            temp_key_data = jQuery.trim($(this).val());
+            if(temp_key_data!='')
+            {
+              temp_get_name = jQuery.trim($(this).attr("key-data"));
+            
+              var opdata = {
+                [temp_get_name]: temp_key_data
+              }
+              temp_json = Object.assign(temp_json, opdata);
+            }//closed if
+          });
+        }//closed
+      
+      	property_json.properties.push(temp_json); 
+      
+        var params = {
+          type: 'POST',
+          url: '/cart/change.js',
+          data: { line: line, properties: property_json.properties[0] },
+          dataType: 'json',
+          async:false,
+          success:function(cart) {
+            updateCartItemCallback(cart, new_herf);
+          }
+        };
+
+        $.ajax(params);
+      //save this code closed
+    }
+    else 
+    {
+      return false;
+    }
+    
+  });//closed 
+});
+</script>
+<script>
+  //click to click all button
+  $(document).ready(function(){
+    $("#click_save, .click_save").click(function(){
+      var new_herf= document.referrer;
+        
+       if( new_herf == new_herf )
+       {
+         $("a.sr_save_btn").trigger("click");
+         var formIsValid = true;
+    
+    	var ref = $("#cart_form").find(".required");
+    	var error_first_index = 'blank';
+        
+    if (formIsValid)
+    {
+      //this is update code for all properties start
+        var sr_save_btn = $("#cart_form").find(".sr_save_btn");
+        if(sr_save_btn.length>0)
+        {
+          $(sr_save_btn).each(function(e){
+            
+            var line_item_no = $(this).attr("data-line");
+            
+            var ref_required = $("#myform_"+line_item_no).find(".required");
+            var ref_optional = $("#myform_"+line_item_no).find(".optional");
+
+            //save this code start
+              var line = parseInt(line_item_no);
+              
+              var property_json = {};
+              property_json.properties = [];
+
+              var temp_json = {};
+
+              var temp_key_data = "";
+              var temp_get_name = "";
+
+              if(ref_required.length>=1)
+              {
+                $(ref_required).each(function() {
+                  temp_key_data = jQuery.trim($(this).val());
+                  if(temp_key_data!='')
+            	  {
+                    temp_get_name = jQuery.trim($(this).attr("key-data"));
+
+                    var odata = {
+                      [temp_get_name]: temp_key_data
+                    }
+                    temp_json = Object.assign(temp_json, odata);
+                  }//if closed
+                });
+
+              }// closed
+
+              if(ref_optional.length>=1)
+              {
+                $(ref_optional).each(function() {
+                  temp_key_data = jQuery.trim($(this).val());
+                  if(temp_key_data!='')
+            	  {
+                    temp_get_name = jQuery.trim($(this).attr("key-data"));
+                    var odata = {
+                      [temp_get_name]: temp_key_data
+                    }
+                    temp_json = Object.assign(temp_json, odata);
+                  }// if closed
+                });
+              }//closed
+
+              property_json.properties.push(temp_json); 
+
+              var params = {
+                type: 'POST',
+                url: '/cart/change.js',
+                data: { line: line, properties: property_json.properties[0] },
+                dataType: 'json',
+                async:false,
+                success:function(cart) {
+                  console.log('update data');
+                }
+              };
+
+              $.ajax(params);
+            //save this code closed
+          });
+          
+          $("a#click_save").attr("href", "{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}")
+          
+        }//if closed
+        else
+        {
+          $("a#click_save").attr("href", "{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}")
+        }
+      //this is update code for all properties closed
+    }
+    else 
+    {
+      $(ref).eq(error_first_index).focus();
+      return false;
+    }
+
+       }
+                              else{
+      $("a.sr_save_btn").trigger("click");
+       }
+    });
+  });
+</script>

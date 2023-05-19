@@ -1,0 +1,64 @@
+{% assign imgSrc = '""' %}
+{% assign price = '""' %}
+{% assign compare = '""' %}
+{% assign collections = '""' %}
+{% assign rawPrice = '""' %}
+{% assign rawCompare = '""' %}
+{% assign priceVaries = '""' %}
+{% assign priceMin = '""' %}
+{% assign textContent = '""' %}
+
+{% capture results %}
+  {%- comment %}<locksmith:aa8a>{% endcomment -%}
+    {%- assign locksmith_9bf2_forloop__size = 0 %}{% for item in search.results %}{% capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == 'true' %}{% assign locksmith_9bf2_forloop__size = locksmith_9bf2_forloop__size | plus: 1 %}{% endif %}{% endfor %}{% assign locksmith_9bf2_forloop__index = nil -%}
+  {%- comment %}</locksmith:aa8a>{% endcomment -%}
+  {% for item in search.results %}
+
+    {%- comment %}<locksmith:fcb6>{% endcomment -%}
+      {%- capture var %}{% render 'locksmith-variables', scope: 'subject', subject: item, subject_parent: search, variable: 'transparent' %}{% endcapture %}{% if var == "true" %}{% if locksmith_9bf2_forloop__index == nil %}{% assign locksmith_9bf2_forloop__index = 1 %}{% assign locksmith_9bf2_forloop__index0 = 0 %}{% else %}{% assign locksmith_9bf2_forloop__index = locksmith_9bf2_forloop__index | plus: 1 %}{% assign locksmith_9bf2_forloop__index0 = locksmith_9bf2_forloop__index0 | plus: 1 %}{% endif %}{% if locksmith_9bf2_forloop__index == 1 %}{% assign locksmith_9bf2_forloop__first = true %}{% else %}{% assign locksmith_9bf2_forloop__first = false %}{% endif %}{% if locksmith_9bf2_forloop__index == locksmith_9bf2_forloop__size %}{% assign locksmith_9bf2_forloop__last = true %}{% else %}{% assign locksmith_9bf2_forloop__last = false %}{% endif %}{% assign locksmith_9bf2_forloop__rindex = locksmith_9bf2_forloop__size | minus: locksmith_9bf2_forloop__index | minus: 1 %}{% assign locksmith_9bf2_forloop__rindex0 = locksmith_9bf2_forloop__size | minus: locksmith_9bf2_forloop__index0 | minus: 1 %}{% else %}{% continue %}{% endif -%}
+    {%- comment %}</locksmith:fcb6>{% endcomment -%}
+
+    {% if item.object_type == 'product' %}
+      {% assign imgSrc = item.featured_image.src | img_url: '200x'  | json %}
+      {% assign collections = item.collections | json %}
+      {% assign price = item.price | money | json %}
+      {% assign rawPrice = item.price | json %}
+      {% assign available = item.available | json %}
+      {% assign compare = item.compare_at_price_max | money | json %}
+      {% assign rawCompare = item.compare_at_price_max | json %}
+      {% assign priceVaries = item.price_varies | json %}
+      {% assign priceMin = item.price_min | json %}
+    {% elsif item.object_type == 'article' %}
+      {% if item.image.src != blank %}
+        {% assign imgSrc = item.image.src | img_url: '200x' | json %}
+      {% endif %}
+      {% assign textContent = item.excerpt | strip_html | truncatewords: 5 | json %}
+      {% assign available = true %}
+    {% elsif item.object_type == 'page' %}
+      {% assign available = true %}
+      {% assign textContent = item.content | strip_html | truncatewords: 5 | json %}
+    {% endif %}
+
+    {% assign product = item %}
+      {
+        "object_type": {{ product.object_type | json }},
+        "title"    : {{ product.title | json }},
+        "url"      : {{ product.url | json }},
+        "available": {{ available }},
+        "thumbnail": {{ imgSrc }},
+        "price"    : {{ price }},
+        "compare"  : {{ compare }},
+        "collections": {{ collections }},
+        "raw_price": {{ rawPrice }},
+        "raw_compare": {{ rawCompare }},
+        "price_varies": {{ priceVaries }},
+        "price_min": {{ priceMin }},
+        "text_content": {{ textContent }}
+      }
+    {% unless locksmith_9bf2_forloop__last %},{% endunless %}
+  {% endfor %}
+{% endcapture %}
+{
+  "results_count": {{ search.results_count }},
+  "results": [{{ results }}]
+}
